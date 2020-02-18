@@ -20,24 +20,23 @@ public class Grille extends JPanel {
     public Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     int width = (int) screenSize.getWidth();
     int height = (int) screenSize.getHeight();
-    private int tab[][];
-
+    
     public Grille() {
         //this.setLayout(null);
         this.setVisible(true);
         JPanel p = new JPanel();
 
 
-        this.tab = tab;
 
         p.setLayout(new GridLayout(SIZE, SIZE));
-        p.setPreferredSize(new Dimension(1000, 1000)); // taille de la grille
+        p.setPreferredSize(new Dimension(700, 700)); // taille de la grille
         for (int j = 0; j < SIZE * SIZE; j++) { // permet de mettre les 100 bouttons
             JButton button = new JButton();
             int x = j / SIZE;
             int y = j % SIZE;
             Case caseCase = new Case(button, x, y);
             liste.add(caseCase);
+            
             if(j == 0 || j == 7 || j == 14 || j == 105 || j == 119 || j == 210 || j == 217 || j == 224 )
                 liste.get(j).getButton().setBackground(new Color(235,36,41));
             else if (j == 3 || j == 11 || j == 36 || j == 38 ||j == 45|| j == 52 || j == 59 || j == 92 || j == 96|| j == 98|| j == 102|| j == 108|| j == 116|| j == 122 || j == 126|| j == 128|| j == 132|| j == 165|| j == 172|| j == 179|| j == 186|| j == 188|| j == 213|| j == 221){
@@ -55,13 +54,15 @@ public class Grille extends JPanel {
             button.setBorderPainted(true);
             button.setBorder(new LineBorder(Color.BLACK,2));
             p.add(button);
+            
         }
+
         add(p);
         this.setBackground(new Color(254, 211, 7));
     }
 
 
-    public static ArrayList<Case> getListeGauche() {
+    public ArrayList<Case> getListe() {
         return liste;
     }
 }

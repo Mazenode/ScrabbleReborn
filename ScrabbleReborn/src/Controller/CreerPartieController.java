@@ -195,6 +195,7 @@ public class CreerPartieController {
 					JeuView jeuView = new JeuView();
 					JeuModel jeuModel = new JeuModel();
 					JeuController jeuController = new JeuController(jeuView, jeuModel);
+					view.setVisible(false);
 				}
 			});	
 		}
