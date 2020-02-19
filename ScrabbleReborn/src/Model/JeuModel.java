@@ -3,6 +3,18 @@ package Model;
 import javax.swing.ImageIcon;
 
 public class JeuModel {
+	private ImageIcon imgSauvegarderActive = new ImageIcon(this.getClass().getResource("/images/sauvegarder_active.png"));
+	private ImageIcon imgSoumettreActive = new ImageIcon(this.getClass().getResource("/images/soumettre_mot_active.png"));
+	
+	public ImageIcon getSauvegarderActive() {
+		return imgSauvegarderActive;
+	}
+	
+	public ImageIcon getSoumettreActive() {
+		return imgSoumettreActive;
+	}
+	
+	
 	private ImageIcon lettreA = new ImageIcon(this.getClass().getResource("/images/a.png"));
 	private ImageIcon lettreB = new ImageIcon(this.getClass().getResource("/images/b.png"));
 	private ImageIcon lettreC = new ImageIcon(this.getClass().getResource("/images/c.png"));

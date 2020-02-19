@@ -65,10 +65,10 @@ public class CreerJoueurController {
 					FileOutputStream path;
 					try {
 							if(CreerPartieModel.length == 12) {
-								path = new FileOutputStream("test.txt");
+								path = new FileOutputStream("profils.txt");
 							}
 							else {
-								path = new FileOutputStream("test.txt", true);
+								path = new FileOutputStream("profils.txt", true);
 							}
 							
 							PrintWriter pw = new PrintWriter(path);

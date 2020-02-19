@@ -66,7 +66,7 @@ public class CreerPartieModel {
 	
 	public void readFile() throws IOException {
 		//On ouvre le buffer...
-		BufferedReader buffer = new BufferedReader(new FileReader("test.txt"));
+		BufferedReader buffer = new BufferedReader(new FileReader("profils.txt"));
 		
 		//...et on initialise le nombre de lignes a 0.
 		length = 0;
@@ -95,7 +95,7 @@ public class CreerPartieModel {
 			listeImg[i] = Integer.parseInt(listeResultats[j]);
 			j+=2;
 		}
-}
+	}
 	
 	public ImageIcon getCreerJoueur() {
 		return creerJoueur;

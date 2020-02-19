@@ -15,6 +15,11 @@ public class JeuView extends JFrame {
     public int width = (int)screenSize.getWidth();
     public int height = (int)screenSize.getHeight();
     private ImageIcon imgBack = new ImageIcon(this.getClass().getResource("/images/back.png"));
+    private ImageIcon imgSauvegarder = new ImageIcon(this.getClass().getResource("/images/sauvegarder.png"));
+    private ImageIcon imgFondScore = new ImageIcon(this.getClass().getResource("/images/fond_score.png"));
+    private ImageIcon imgFondLettresRestantes = new ImageIcon(this.getClass().getResource("/images/lettres_restantes.png"));
+    private ImageIcon imgSoumettreMot = new ImageIcon(this.getClass().getResource("/images/soumettre_mot.png"));
+    
     Grille grille;
     private JLabel back, titreScores, tourDe, tourDuJoueur,lettresRestantesFond, lettresRestantes, boutonSoumettreMot, imgJoueur, boutonSauvegarder;
     private JLabel J1, J2, J3, J4, scoreJ1, scoreJ2, scoreJ3, scoreJ4;
@@ -28,7 +33,6 @@ public class JeuView extends JFrame {
         getContentPane().setLayout(null);
         this.setVisible(true);
         getContentPane().setBackground(new Color(254,211,7));
- 
         
         back = new JLabel();
 		back.setIcon(imgBack);
@@ -36,14 +40,14 @@ public class JeuView extends JFrame {
 		getContentPane().add(back);
 		
 		boutonSauvegarder = new JLabel("");
-        boutonSauvegarder.setIcon(new ImageIcon(Test.class.getResource("/images/sauvegarder.png")));
+        boutonSauvegarder.setIcon(imgSauvegarder);
         boutonSauvegarder.setBounds(86, 25, 182, 42);
         getContentPane().add(boutonSauvegarder);
 		
 
         JPanel ongletScore = new JPanel();
         ongletScore.setBackground(new Color(254, 211, 7));
-        ongletScore.setBounds(0, 76, 282, 191);
+        ongletScore.setBounds(0, 76, 268, 191);
         getContentPane().add(ongletScore);
 		ongletScore.setLayout(null);
         
@@ -61,7 +65,7 @@ public class JeuView extends JFrame {
         
         JLabel fondScore = new JLabel("");
         fondScore.setHorizontalAlignment(SwingConstants.CENTER);
-        fondScore.setIcon(new ImageIcon(Test.class.getResource("/images/fond_score.png")));
+        fondScore.setIcon(imgFondScore);
         fondScore.setBounds(0, 5, 278, 186);
         ongletScore.add(fondScore);
         
@@ -174,7 +178,7 @@ public class JeuView extends JFrame {
         
         lettresRestantesFond = new JLabel("");
         lettresRestantesFond.setHorizontalAlignment(SwingConstants.CENTER);
-        lettresRestantesFond.setIcon(new ImageIcon(Test.class.getResource("/images/lettres_restantes.png")));
+        lettresRestantesFond.setIcon(imgFondLettresRestantes);
         lettresRestantesFond.setBounds(0, 0, 175, 186);
         ongletLettresRestantes.add(lettresRestantesFond);
 
@@ -202,7 +206,6 @@ public class JeuView extends JFrame {
         ongletTour.add(tourDe, gbc_tourDe);
         
         imgJoueur = new JLabel("");
-        imgJoueur.setIcon(new ImageIcon(Test.class.getResource("/images/12_clicked.png")));
         GridBagConstraints gbc_imgJoueur = new GridBagConstraints();
         gbc_imgJoueur.insets = new Insets(0, 0, 5, 0);
         gbc_imgJoueur.gridx = 0;
@@ -224,7 +227,7 @@ public class JeuView extends JFrame {
         getContentPane().add(ongletSoumettreMot);
         
         boutonSoumettreMot = new JLabel("");
-        boutonSoumettreMot.setIcon(new ImageIcon(Test.class.getResource("/images/soumettre_mot.png")));
+        boutonSoumettreMot.setIcon(imgSoumettreMot);
         ongletSoumettreMot.add(boutonSoumettreMot);
         
         grille = new Grille();
@@ -238,41 +241,42 @@ public class JeuView extends JFrame {
         lettres.setLayout(new GridLayout(1, 0, 0, 0));
         
         lettre1 = new JLabel("");
-        lettre1.setIcon(new ImageIcon(Test.class.getResource("/images/u.png")));
         lettre1.setHorizontalAlignment(SwingConstants.CENTER);
         lettres.add(lettre1);
         
         lettre2 = new JLabel("");
-        lettre2.setIcon(new ImageIcon(Test.class.getResource("/images/u.png")));
         lettre2.setHorizontalAlignment(SwingConstants.CENTER);
         lettres.add(lettre2);
         
         lettre3 = new JLabel("");
-        lettre3.setIcon(new ImageIcon(Test.class.getResource("/images/u.png")));
         lettre3.setHorizontalAlignment(SwingConstants.CENTER);
         lettres.add(lettre3);
         
         lettre4 = new JLabel("");
-        lettre4.setIcon(new ImageIcon(Test.class.getResource("/images/u.png")));
         lettre4.setHorizontalAlignment(SwingConstants.CENTER);
         lettres.add(lettre4);
         
         lettre5 = new JLabel("");
-        lettre5.setIcon(new ImageIcon(Test.class.getResource("/images/u.png")));
         lettre5.setHorizontalAlignment(SwingConstants.CENTER);
         lettres.add(lettre5);
         
         lettre6 = new JLabel("");
-        lettre6.setIcon(new ImageIcon(Test.class.getResource("/images/u.png")));
         lettre6.setHorizontalAlignment(SwingConstants.CENTER);
         lettres.add(lettre6);
         
         lettre7 = new JLabel("");
-        lettre7.setIcon(new ImageIcon(Test.class.getResource("/images/u.png")));
         lettre7.setHorizontalAlignment(SwingConstants.CENTER);
         lettres.add(lettre7);
         
         grille.revalidate();
+    }
+    
+    public JLabel getBoutonSauvegarder() {
+    	return boutonSauvegarder;
+    }
+    
+    public JLabel getBoutonSoumettre() {
+    	return boutonSoumettreMot;
     }
     
     public Grille getGrille() {

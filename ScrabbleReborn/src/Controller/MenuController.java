@@ -3,8 +3,10 @@ package Controller;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import Model.ChargerPartieModel;
 import Model.CreerPartieModel;
 import Model.MenuModel;
+import View.ChargerPartieView;
 import View.CreerPartieView;
 import View.MenuView;
 
@@ -54,7 +56,10 @@ public class MenuController {
 		
 		view.getBoutonCharger().addMouseListener(new MouseAdapter(){
 			public void mousePressed(MouseEvent e){
-				
+				ChargerPartieView chargerPartieView = new ChargerPartieView();
+				ChargerPartieModel chargerPartieModel = new ChargerPartieModel();
+				ChargerPartieController chargerPartieController = new ChargerPartieController(chargerPartieView, chargerPartieModel);
+				view.setVisible(false);
 			}
 		});	
 		

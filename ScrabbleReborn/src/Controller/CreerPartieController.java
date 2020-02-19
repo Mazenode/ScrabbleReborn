@@ -1,7 +1,17 @@
 package Controller;
 
+import java.awt.HeadlessException;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
@@ -19,12 +29,15 @@ public class CreerPartieController {
 	private CreerPartieModel model;
 	private JLabel boutonQuit; 
 	private int nbJoueur;
+	private String[] setJoueur;
 
 	public CreerPartieController(CreerPartieView view, CreerPartieModel model) {
 		this.view = view;
 		this.model = model;
 		view.setVisible(true);
 		nbJoueur = 0;
+		setJoueur = new String[4];
+		
 	
 		//Boucle qui nous permet de remplacer les pseudos vides par les pseudos des joueurs.
 		for (int i = 1; i < model.getLength(); i++) {
@@ -46,8 +59,9 @@ public class CreerPartieController {
 				if(model.getLength() > 1 && view.getNumJoueur(1).getText().isEmpty() && nbJoueur < 4) {
 					nbJoueur++;
 					marqueNumJoueur(1, nbJoueur);
+					setJoueur(1);
 					view.getImg(1).setIcon(model.getImg(model.getImg()[0], true));
-					plusDeDeuxJoueurs();
+					creerPartie();
 				}
 			}
 		});	
@@ -57,8 +71,9 @@ public class CreerPartieController {
 				if(model.getLength() > 2 && view.getNumJoueur(2).getText().isEmpty() && nbJoueur < 4) {
 					nbJoueur++;
 					marqueNumJoueur(2, nbJoueur);
+					setJoueur(2);
 					view.getImg(2).setIcon(model.getImg(model.getImg()[1], true));
-					plusDeDeuxJoueurs();
+					creerPartie();
 				}
 			}
 		});	
@@ -66,10 +81,11 @@ public class CreerPartieController {
 		view.getImg(3).addMouseListener(new MouseAdapter(){
 			public void mousePressed(MouseEvent e){
 				if(model.getLength() > 3 && view.getNumJoueur(3).getText().isEmpty() && nbJoueur < 4) {
-					nbJoueur++;
+					nbJoueur++;			
 					marqueNumJoueur(3,nbJoueur);
+					setJoueur(3);
 					view.getImg(3).setIcon(model.getImg(model.getImg()[2], true));
-					plusDeDeuxJoueurs();
+					creerPartie();
 				}
 			}
 		});	
@@ -79,8 +95,9 @@ public class CreerPartieController {
 				if(model.getLength() > 4 && view.getNumJoueur(4).getText().isEmpty() && nbJoueur < 4) {
 					nbJoueur++;
 					marqueNumJoueur(4, nbJoueur);
+					setJoueur(4);
 					view.getImg(4).setIcon(model.getImg(model.getImg()[3], true));
-					plusDeDeuxJoueurs();
+					creerPartie();
 				}
 			}
 		});	
@@ -90,8 +107,9 @@ public class CreerPartieController {
 				if(model.getLength() > 5 && view.getNumJoueur(5).getText().isEmpty() && nbJoueur < 4) {
 					nbJoueur++;
 					marqueNumJoueur(5, nbJoueur);
+					setJoueur(5);
 					view.getImg(5).setIcon(model.getImg(model.getImg()[4], true));
-					plusDeDeuxJoueurs();
+					creerPartie();
 				}
 			}
 		});	
@@ -101,8 +119,9 @@ public class CreerPartieController {
 				if(model.getLength() > 6 && view.getNumJoueur(6).getText().isEmpty() && nbJoueur < 4) {
 					nbJoueur++;
 					marqueNumJoueur(6, nbJoueur);
+					setJoueur(6);
 					view.getImg(6).setIcon(model.getImg(model.getImg()[5], true));
-					plusDeDeuxJoueurs();
+					creerPartie();
 				}
 			}
 		});	
@@ -150,7 +169,7 @@ public class CreerPartieController {
 						CreerJoueurModel creerJoueurModel = new CreerJoueurModel();
 						CreerJoueurController creerJoueurController = new CreerJoueurController(creerJoueurView, creerJoueurModel);
 						view.setVisible(false);
-				        }
+				    }
 					
 				}
 				else {
@@ -184,7 +203,7 @@ public class CreerPartieController {
 		view.getNumJoueur(i).setText("J"+ nbJoueur);
 	}
 	
-	public void plusDeDeuxJoueurs() {
+	public void creerPartie() {
 		if(nbJoueur > 1) {
 			view.getLancerPartie().setIcon(model.getLancerPartie(false));
 			view.getLancerPartie().addMouseListener(new MouseAdapter(){
@@ -192,12 +211,142 @@ public class CreerPartieController {
 					view.getLancerPartie().setIcon(model.getLancerPartie(true));
 				}
 				public void mousePressed(MouseEvent e){
-					JeuView jeuView = new JeuView();
-					JeuModel jeuModel = new JeuModel();
-					JeuController jeuController = new JeuController(jeuView, jeuModel);
-					view.setVisible(false);
+					
+					
+					try {
+						if( getNumPartie() == -1) {
+							String msg = "<html>Vous avez atteint le nombre limite de parties !<br> "
+									+ "Re-creer une partie effacera les sauvegardes precedentes. <br> "
+									+ "Etes-vous sur de vouloir continuer ?</html>";
+							int reponse = JOptionPane.showConfirmDialog(null, msg, "Avertissement", JOptionPane.YES_NO_OPTION);
+							if (reponse == JOptionPane.YES_OPTION) {
+								ecritDonnees(true);
+						    }
+							
+						}
+						else {
+							ecritDonnees(false);
+						}
+					} catch (HeadlessException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					
+					
+					
 				}
 			});	
+		}
+	}
+	
+	public int getNumPartie() throws IOException {
+		BufferedReader buffer = new BufferedReader(new FileReader("parties.txt"));
+		
+		int length = 0;
+		
+	    String line;
+	    
+	    while ((line = buffer.readLine()) != null) {
+	        length += 1;
+	        
+	    }
+
+	    switch(length ) {
+			case 1:
+				return 1;
+			case 14:
+				return 2;
+			case 27:
+				return 3;
+			case 40:
+				return 4;
+			case 53:
+				return 5;
+			case 66:
+				return 6;
+		}
+		return -1;
+	}
+	
+	public void setJoueur(int i) {
+		i -= 1;
+		if(nbJoueur == 1) {
+			setJoueur[0] = model.getPseudos()[i];
+		}
+		else if(nbJoueur == 2) {
+			setJoueur[1] = model.getPseudos()[i];
+		}
+		else if(nbJoueur == 3) {
+			setJoueur[2] = model.getPseudos()[i];
+		}
+		else if(nbJoueur == 4) {
+			setJoueur[3] = model.getPseudos()[i];
+		}
+	}
+	
+	public void ecritDonnees(boolean plein) {
+		try {
+			FileOutputStream path;
+			if(plein) {
+				path = new FileOutputStream("parties.txt");
+			}
+			else {
+				path = new FileOutputStream("parties.txt", true);
+			}
+			
+			PrintWriter pw = new PrintWriter(path);
+			
+			
+			try {
+				if(plein) {
+					pw.println();
+					pw.println("Partie 1");
+				}
+				else {
+					pw.println("Partie " + getNumPartie());
+				}
+				Date date = new Date();  
+			    SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yy");  
+			    String strDate= formatter.format(date);  
+				pw.println(strDate);
+				
+				
+				for(int i = 1; i < 5; i++) {
+					pw.println("J" + i + " " + setJoueur[i - 1]);
+					pw.println("0");
+				}
+				
+				pw.println("#################################################################################################################################################################################################################################");
+				//Nombre de tours
+				pw.println("0");
+				
+				//Nombre de lettres restantes
+				pw.println("102");
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			
+			pw.close();
+			
+			
+			
+		} catch (FileNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		view.setVisible(false);
+		
+		JeuView jeuView = new JeuView();
+		JeuModel jeuModel = new JeuModel();
+		try {
+			JeuController jeuController = new JeuController(jeuView, jeuModel, getNumPartie());
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
 		}
 	}
 }
