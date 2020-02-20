@@ -25,16 +25,16 @@ public class ChargerPartieView extends JFrame{
 	static int height = (int)screenSize.getHeight();
 	public static JPanel panel_1, panel_2, panel_3, panel_4, panel_5, panel_6;
 	public static JLabel fond1, fond2, fond3, fond4, fond5, fond6;
-	private JPanel sous_panel_1, sous_panel_2, sous_panel_3, sous_panel_4, sous_panel_5, sous_panel_6;
-	private JLabel partie1, partie2, partie3, partie4, partie5, partie6;
+	public JPanel sous_panel_1, sous_panel_2, sous_panel_3, sous_panel_4, sous_panel_5, sous_panel_6;
+	private static JLabel partie1, partie2, partie3, partie4, partie5, partie6;
 	private static JLabel tour, lblNewLabel;
 	public static JLabel cache;
 	private JLabel label, label_1, label_2, label_3, label_4, label_5, label_6, label_7, label_8, label_9;
 	private JLabel tour1, tour2, tour3, tour4, tour5, tour6;
 	private JLabel date1, date2, date3, date4, date5, date6;
-	private JPanel panel1Rempli, panel2Rempli, panel3Rempli, panel4Rempli, panel5Rempli, panel6Rempli;
-	private JPanel panel1Vide, panel2Vide, panel3Vide, panel4Vide, panel5Vide, panel6Vide;
-
+	public JPanel panel1Rempli, panel2Rempli, panel3Rempli, panel4Rempli, panel5Rempli, panel6Rempli;
+	public JPanel panel1Vide, panel2Vide, panel3Vide, panel4Vide, panel5Vide, panel6Vide;
+	public CardLayout c1, c2, c3, c4, c5, c6;
 	
 	public ChargerPartieView() {
 		this.setUndecorated(true);
@@ -89,11 +89,12 @@ public class ChargerPartieView extends JFrame{
 		sous_panel_1.setBounds(23, 14, 862, 54);
 		sous_panel_1.setBackground(new Color(244, 214, 88));
 		panel_1.add(sous_panel_1);
-		sous_panel_1.setLayout(new CardLayout(0, 0));
+		c1 = new CardLayout(0, 0);
+		sous_panel_1.setLayout(c1);
 		
 		panel1Rempli = new JPanel();
 		panel1Rempli.setBackground(new Color(244, 214, 88));
-		sous_panel_1.add(panel1Rempli);
+		sous_panel_1.add(panel1Rempli, "1");
 		panel1Rempli.setLayout(null);
 		
 		partie1 = new JLabel("Partie 1");
@@ -114,7 +115,7 @@ public class ChargerPartieView extends JFrame{
 		tour1.setBounds(503, 0, 44, 58);
 		panel1Rempli.add(tour1);
 		
-		date1 = new JLabel("20/02/20");
+		date1 = new JLabel();
 		date1.setHorizontalAlignment(SwingConstants.RIGHT);
 		date1.setFont(new Font("Lato", Font.BOLD, 24));
 		date1.setBounds(740, 0, 122, 58);
@@ -123,7 +124,7 @@ public class ChargerPartieView extends JFrame{
 		panel1Vide = new JPanel();
 		panel1Vide.setBounds(0, 0, 862, 58);
 		panel1Vide.setBackground(new Color(244, 214, 88));
-		sous_panel_1.add(panel1Vide);
+		sous_panel_1.add(panel1Vide, "2");
 		panel1Vide.setLayout(null);
 		
 		lblNewLabel = new JLabel("Emplacement Vide");
@@ -150,16 +151,17 @@ public class ChargerPartieView extends JFrame{
 		sous_panel_2.setBounds(23, 14, 862, 52);
 		sous_panel_2.setBackground(new Color(244, 214, 88));
 		panel_2.add(sous_panel_2);
-		sous_panel_2.setLayout(new CardLayout(0, 0));
+		c2 = new CardLayout(0, 0);
+		sous_panel_2.setLayout(c2);
 		
 		panel2Rempli = new JPanel();
 		panel2Rempli.setBackground(new Color(244, 214, 88));
-		sous_panel_2.add(panel2Rempli);
+		sous_panel_2.add(panel2Rempli, "1");
 		panel2Rempli.setLayout(null);
 		
 		panel2Vide = new JPanel();
 		panel2Vide.setBackground(new Color(244, 214, 88));
-		sous_panel_2.add(panel2Vide);
+		sous_panel_2.add(panel2Vide, "2");
 		panel2Vide.setLayout(null);
 		
 		label_5 = new JLabel("Emplacement Vide");
@@ -187,7 +189,7 @@ public class ChargerPartieView extends JFrame{
 		tour2.setBounds(503, 0, 44, 58);
 		panel2Rempli.add(tour2);
 		
-		date2 = new JLabel("20/02/20");
+		date2 = new JLabel();
 		date2.setHorizontalAlignment(SwingConstants.RIGHT);
 		date2.setFont(new Font("Lato", Font.BOLD, 24));
 		date2.setBounds(740, 0, 122, 58);
@@ -210,16 +212,17 @@ public class ChargerPartieView extends JFrame{
 		sous_panel_3.setBounds(23, 14, 862, 52);
 		sous_panel_3.setBackground(new Color(244, 214, 88));
 		panel_3.add(sous_panel_3);
-		sous_panel_3.setLayout(new CardLayout(0, 0));
+		c3 = new CardLayout(0, 0);
+		sous_panel_3.setLayout(c3);
 		
 		panel3Rempli = new JPanel();
 		panel3Rempli.setBackground(new Color(244, 214, 88));
-		sous_panel_3.add(panel3Rempli);
+		sous_panel_3.add(panel3Rempli, "1");
 		panel3Rempli.setLayout(null);
 		
 		panel3Vide = new JPanel();
 		panel3Vide.setBackground(new Color(244, 214, 88));
-		sous_panel_3.add(panel3Vide);
+		sous_panel_3.add(panel3Vide, "2");
 		panel3Vide.setLayout(null);
 		
 		label_6 = new JLabel("Emplacement Vide");
@@ -247,7 +250,7 @@ public class ChargerPartieView extends JFrame{
 		tour3.setFont(new Font("Lato", Font.BOLD, 24));
 		panel3Rempli.add(tour3, "name_535794647179699");
 		
-		date3 = new JLabel("20/02/20");
+		date3 = new JLabel();
 		date3.setBounds(740, 0, 122, 58);
 		date3.setHorizontalAlignment(SwingConstants.RIGHT);
 		date3.setFont(new Font("Lato", Font.BOLD, 24));
@@ -271,16 +274,17 @@ public class ChargerPartieView extends JFrame{
 		sous_panel_4.setBounds(23, 14, 862, 52);
 		sous_panel_4.setBackground(new Color(244, 214, 88));
 		panel_4.add(sous_panel_4);
-		sous_panel_4.setLayout(new CardLayout(0, 0));
+		c4 = new CardLayout(0, 0);
+		sous_panel_4.setLayout(c4);
 		
 		panel4Rempli = new JPanel();
 		panel4Rempli.setBackground(new Color(244, 214, 88));
-		sous_panel_4.add(panel4Rempli);
+		sous_panel_4.add(panel4Rempli, "1");
 		panel4Rempli.setLayout(null);
 		
 		panel4Vide = new JPanel();
 		panel4Vide.setBackground(new Color(244, 214, 88));
-		sous_panel_4.add(panel4Vide);
+		sous_panel_4.add(panel4Vide, "2");
 		panel4Vide.setLayout(null);
 		
 		partie4 = new JLabel("Partie 4");
@@ -301,7 +305,7 @@ public class ChargerPartieView extends JFrame{
 		tour4.setFont(new Font("Lato", Font.BOLD, 24));
 		panel4Rempli.add(tour4, "name_535819046748700");
 		
-		date4 = new JLabel("20/02/20");
+		date4 = new JLabel();
 		date4.setBounds(740, 0, 122, 58);
 		date4.setHorizontalAlignment(SwingConstants.RIGHT);
 		date4.setFont(new Font("Lato", Font.BOLD, 24));
@@ -332,16 +336,17 @@ public class ChargerPartieView extends JFrame{
 		sous_panel_5.setBounds(23, 14, 862, 52);
 		sous_panel_5.setBackground(new Color(244, 214, 88));
 		panel_5.add(sous_panel_5);
-		sous_panel_5.setLayout(new CardLayout(0, 0));
+		c5 = new CardLayout(0, 0);
+		sous_panel_5.setLayout(c5);
 		
 		panel5Rempli = new JPanel();
 		panel5Rempli.setBackground(new Color(244, 214, 88));
-		sous_panel_5.add(panel5Rempli);
+		sous_panel_5.add(panel5Rempli, "1");
 		panel5Rempli.setLayout(null);
 		
 		panel5Vide = new JPanel();
 		panel5Vide.setBackground(new Color(244, 214, 88));
-		sous_panel_5.add(panel5Vide);
+		sous_panel_5.add(panel5Vide, "2");
 		panel5Vide.setLayout(null);
 		
 		partie5 = new JLabel("Partie 5");
@@ -362,7 +367,7 @@ public class ChargerPartieView extends JFrame{
 		tour5.setFont(new Font("Lato", Font.BOLD, 24));
 		panel5Rempli.add(tour5, "name_535822933169600");
 		
-		date5 = new JLabel("20/02/20");
+		date5 = new JLabel();
 		date5.setBounds(740, 0, 122, 58);
 		date5.setHorizontalAlignment(SwingConstants.RIGHT);
 		date5.setFont(new Font("Lato", Font.BOLD, 24));
@@ -393,16 +398,17 @@ public class ChargerPartieView extends JFrame{
 		sous_panel_6.setBounds(23, 14, 862, 52);
 		sous_panel_6.setBackground(new Color(244, 214, 88));
 		panel_6.add(sous_panel_6);
-		sous_panel_6.setLayout(new CardLayout(0, 0));
+		c6 = new CardLayout(0, 0);
+		sous_panel_6.setLayout(c6);
 		
 		panel6Rempli = new JPanel();
 		panel6Rempli.setBackground(new Color(244, 214, 88));
-		sous_panel_6.add(panel6Rempli);
+		sous_panel_6.add(panel6Rempli, "1");
 		panel6Rempli.setLayout(null);
 		
 		panel6Vide = new JPanel();
 		panel6Vide.setBackground(new Color(244, 214, 88));
-		sous_panel_6.add(panel6Vide);
+		sous_panel_6.add(panel6Vide, "2");
 		panel6Vide.setLayout(null);
 		
 		partie6 = new JLabel("Partie 6");
@@ -423,7 +429,7 @@ public class ChargerPartieView extends JFrame{
 		tour6.setFont(new Font("Lato", Font.BOLD, 24));
 		panel6Rempli.add(tour6, "name_535827033537499");
 		
-		date6 = new JLabel("20/02/20");
+		date6 = new JLabel();
 		date6.setBounds(740, 0, 122, 58);
 		date6.setHorizontalAlignment(SwingConstants.RIGHT);
 		date6.setFont(new Font("Lato", Font.BOLD, 24));
@@ -459,5 +465,40 @@ public class ChargerPartieView extends JFrame{
 		return cache;
 	}
 	
+	public JLabel getDates(int i) {
+		switch (i) {
+		case 1:
+			return date1;
+		case 2:
+			return date2;
+		case 3:
+			return date3;
+		case 4:
+			return date4;
+		case 5:
+			return date5;
+		case 6:
+			return date6;
+		}
+	return null;
+	}
+	
+	public JLabel getNumTours(int i) {
+		switch (i) {
+		case 1:
+			return tour1;
+		case 2:
+			return tour2;
+		case 3:
+			return tour3;
+		case 4:
+			return tour4;
+		case 5:
+			return tour5;
+		case 6:
+			return tour6;
+		}
+	return null;
+	}
 }
 	

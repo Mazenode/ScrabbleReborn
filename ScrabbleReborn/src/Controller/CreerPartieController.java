@@ -313,18 +313,19 @@ public class CreerPartieController {
 			    String strDate= formatter.format(date);  
 				pw.println(strDate);
 				
-				
-				for(int i = 1; i < 5; i++) {
-					pw.println("J" + i + " " + setJoueur[i - 1]);
-					pw.println("0");
-				}
-				
-				pw.println("#################################################################################################################################################################################################################################");
 				//Nombre de tours
 				pw.println("0");
 				
 				//Nombre de lettres restantes
 				pw.println("102");
+				
+				for(int i = 1; i < 5; i++) {
+					pw.println(setJoueur[i - 1]);
+					pw.println("0");
+				}
+				
+				pw.println("#################################################################################################################################################################################################################################");
+				
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
