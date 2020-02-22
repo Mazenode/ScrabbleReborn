@@ -7,6 +7,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 import Model.Grille;
+import Model.LettreModel;
 
 import java.awt.*;
 
@@ -23,8 +24,8 @@ public class JeuView extends JFrame {
     Grille grille;
     private JLabel back, titreScores, tourDe, tourDuJoueur,lettresRestantesFond, lettresRestantes, boutonSoumettreMot, imgJoueur, boutonSauvegarder;
     private JLabel J1, J2, J3, J4, scoreJ1, scoreJ2, scoreJ3, scoreJ4;
-    private JPanel ongletLettresRestantes,ongletSoumettreMot, lettres,ongletTour;
-    private JLabel lettre1, lettre2, lettre3, lettre4, lettre5, lettre6, lettre7;
+    private JPanel ongletLettresRestantes,ongletSoumettreMot, lettres,ongletTour, lettreMove;
+    public LettreModel lettre1, lettre2, lettre3, lettre4, lettre5, lettre6, lettre7;
     
     public JeuView(){
     	this.setSize(1000, 800);
@@ -40,6 +41,14 @@ public class JeuView extends JFrame {
 		getContentPane().add(back);
 		
 		boutonSauvegarder = new JLabel("");
+
+	lettreMove = new JPanel();
+        lettreMove.setBounds(340+590, 727, 45, 45);
+        getContentPane().add(lettreMove);
+        lettreMove.setVisible(true);
+        lettreMove.setLayout(null);
+        lettreMove.setOpaque(false);
+
         boutonSauvegarder.setIcon(imgSauvegarder);
         boutonSauvegarder.setBounds(86, 25, 182, 42);
         getContentPane().add(boutonSauvegarder);
@@ -240,32 +249,40 @@ public class JeuView extends JFrame {
         getContentPane().add(lettres);
         lettres.setLayout(new GridLayout(1, 0, 0, 0));
         
-        lettre1 = new JLabel("");
-        lettre1.setHorizontalAlignment(SwingConstants.CENTER);
+        lettre1 = new LettreModel("a");
+        lettre1.setOpaque(false);
+        lettre1.setContentAreaFilled(false);
+        lettre1.setBorder(null);
+        lettre2 = new LettreModel("b");
+        lettre2.setOpaque(false);
+        lettre2.setContentAreaFilled(false);
+        lettre2.setBorder(null);
+        lettre3 = new LettreModel("c");
+        lettre3.setOpaque(false);
+        lettre3.setContentAreaFilled(false);
+        lettre3.setBorder(null);
+        lettre4 = new LettreModel("d");
+        lettre4.setOpaque(false);
+        lettre4.setContentAreaFilled(false);
+        lettre4.setBorder(null);
+        lettre5 = new LettreModel("e");
+        lettre5.setOpaque(false);
+        lettre5.setContentAreaFilled(false);
+        lettre5.setBorder(null);
+        lettre6 = new LettreModel("f");
+        lettre6.setOpaque(false);
+        lettre6.setContentAreaFilled(false);
+        lettre6.setBorder(null);
+        lettre7 = new LettreModel("g");
+        lettre7.setOpaque(false);
+        lettre7.setContentAreaFilled(false);
+        lettre7.setBorder(null);
         lettres.add(lettre1);
-        
-        lettre2 = new JLabel("");
-        lettre2.setHorizontalAlignment(SwingConstants.CENTER);
         lettres.add(lettre2);
-        
-        lettre3 = new JLabel("");
-        lettre3.setHorizontalAlignment(SwingConstants.CENTER);
         lettres.add(lettre3);
-        
-        lettre4 = new JLabel("");
-        lettre4.setHorizontalAlignment(SwingConstants.CENTER);
         lettres.add(lettre4);
-        
-        lettre5 = new JLabel("");
-        lettre5.setHorizontalAlignment(SwingConstants.CENTER);
         lettres.add(lettre5);
-        
-        lettre6 = new JLabel("");
-        lettre6.setHorizontalAlignment(SwingConstants.CENTER);
         lettres.add(lettre6);
-        
-        lettre7 = new JLabel("");
-        lettre7.setHorizontalAlignment(SwingConstants.CENTER);
         lettres.add(lettre7);
         
         grille.revalidate();
@@ -285,5 +302,13 @@ public class JeuView extends JFrame {
     
     public JLabel getBack() {
     	return back;
+    }
+
+    public JPanel getLettres() {
+    	return lettres;
+    }
+    
+    public JPanel getLettreMove() {
+    	return lettreMove;
     }
 }
