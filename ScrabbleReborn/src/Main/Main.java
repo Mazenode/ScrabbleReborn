@@ -5,7 +5,6 @@ import java.sql.DriverManager;
 import Controller.ChargerPartieController;
 import Controller.CreerJoueurController;
 import Controller.CreerPartieController;
-import Controller.JeuController;
 import Controller.MenuController;
 import Model.ChargerPartieModel;
 import Model.CreerJoueurModel;
@@ -31,6 +30,7 @@ public class Main {
 		/*JeuView jeuView = new JeuView();
 		JeuModel jeuModel = new JeuModel();
 		JeuController jeuController = new JeuController(jeuView, jeuModel);*/
+		
 		
 		ChargerPartieView view = new ChargerPartieView();
 		ChargerPartieModel model = new ChargerPartieModel();

@@ -21,8 +21,8 @@ public class JeuView extends JFrame {
     private ImageIcon imgFondLettresRestantes = new ImageIcon(this.getClass().getResource("/images/lettres_restantes.png"));
     private ImageIcon imgSoumettreMot = new ImageIcon(this.getClass().getResource("/images/soumettre_mot.png"));
     
-    Grille grille;
-    private JLabel back, titreScores, tourDe, tourDuJoueur,lettresRestantesFond, lettresRestantes, boutonSoumettreMot, imgJoueur, boutonSauvegarder;
+    public Grille grille;
+    private JLabel back, sauvegarderCollisions, soumettreCollisions, titreScores, tourDe, tourDuJoueur,lettresRestantesFond, lettresRestantes, boutonSoumettreMot, imgJoueur, boutonSauvegarder;
     private JLabel J1, J2, J3, J4, scoreJ1, scoreJ2, scoreJ3, scoreJ4;
     private JPanel ongletLettresRestantes,ongletSoumettreMot, lettres,ongletTour, lettreMove;
     public LettreModel lettre1, lettre2, lettre3, lettre4, lettre5, lettre6, lettre7;
@@ -40,18 +40,23 @@ public class JeuView extends JFrame {
 		back.setBounds(20, 11, 70, 54);
 		getContentPane().add(back);
 		
-		boutonSauvegarder = new JLabel("");
-
-	lettreMove = new JPanel();
+		
+		lettreMove = new JPanel();
         lettreMove.setBounds(340+590, 727, 45, 45);
         getContentPane().add(lettreMove);
         lettreMove.setVisible(true);
         lettreMove.setLayout(null);
         lettreMove.setOpaque(false);
 
+
+        boutonSauvegarder = new JLabel("");
         boutonSauvegarder.setIcon(imgSauvegarder);
         boutonSauvegarder.setBounds(86, 25, 182, 42);
         getContentPane().add(boutonSauvegarder);
+        
+        sauvegarderCollisions = new JLabel("");
+        sauvegarderCollisions.setBounds(80, 20, 200, 54);
+        getContentPane().add(sauvegarderCollisions);
 		
 
         JPanel ongletScore = new JPanel();
@@ -230,6 +235,8 @@ public class JeuView extends JFrame {
         gbc_tourDuJoueur.gridy = 2;
         ongletTour.add(tourDuJoueur, gbc_tourDuJoueur);
         
+        
+        
         ongletSoumettreMot = new JPanel();
         ongletSoumettreMot.setBounds(20, 727, 274, 62);
         ongletSoumettreMot.setBackground(new Color(254, 211, 7));
@@ -238,6 +245,10 @@ public class JeuView extends JFrame {
         boutonSoumettreMot = new JLabel("");
         boutonSoumettreMot.setIcon(imgSoumettreMot);
         ongletSoumettreMot.add(boutonSoumettreMot);
+        
+        soumettreCollisions = new JLabel("");
+        soumettreCollisions.setBounds(19, 726, 276, 64);
+        getContentPane().add(soumettreCollisions);
         
         grille = new Grille();
         grille.setBounds(278,11, 700, 710);
@@ -249,31 +260,31 @@ public class JeuView extends JFrame {
         getContentPane().add(lettres);
         lettres.setLayout(new GridLayout(1, 0, 0, 0));
         
-        lettre1 = new LettreModel("a");
+        lettre1 = new LettreModel('a');
         lettre1.setOpaque(false);
         lettre1.setContentAreaFilled(false);
         lettre1.setBorder(null);
-        lettre2 = new LettreModel("b");
+        lettre2 = new LettreModel('b');
         lettre2.setOpaque(false);
         lettre2.setContentAreaFilled(false);
         lettre2.setBorder(null);
-        lettre3 = new LettreModel("c");
+        lettre3 = new LettreModel('c');
         lettre3.setOpaque(false);
         lettre3.setContentAreaFilled(false);
         lettre3.setBorder(null);
-        lettre4 = new LettreModel("d");
+        lettre4 = new LettreModel('d');
         lettre4.setOpaque(false);
         lettre4.setContentAreaFilled(false);
         lettre4.setBorder(null);
-        lettre5 = new LettreModel("e");
+        lettre5 = new LettreModel('e');
         lettre5.setOpaque(false);
         lettre5.setContentAreaFilled(false);
         lettre5.setBorder(null);
-        lettre6 = new LettreModel("f");
+        lettre6 = new LettreModel('f');
         lettre6.setOpaque(false);
         lettre6.setContentAreaFilled(false);
         lettre6.setBorder(null);
-        lettre7 = new LettreModel("g");
+        lettre7 = new LettreModel('g');
         lettre7.setOpaque(false);
         lettre7.setContentAreaFilled(false);
         lettre7.setBorder(null);
@@ -310,5 +321,23 @@ public class JeuView extends JFrame {
     
     public JPanel getLettreMove() {
     	return lettreMove;
+    }
+    
+    public JLabel getCollisions(int i) {
+    	if(i == 1) {
+    		return sauvegarderCollisions;
+    	}
+    	else {
+    		return soumettreCollisions;
+    	}
+    }
+    
+    public ImageIcon getImg(int i) {
+    	if(i == 1) {
+    		return imgSauvegarder;
+    	}
+    	else {
+    		return imgSoumettreMot;
+    	}
     }
 }

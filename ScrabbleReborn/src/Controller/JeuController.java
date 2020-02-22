@@ -6,8 +6,10 @@ import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import Model.ChargerPartieModel;
 import Model.CreerPartieModel;
 import Model.JeuModel;
+import Model.LettreModel;
 import Model.MenuModel;
 import View.CreerPartieView;
 import View.JeuView;
@@ -16,19 +18,106 @@ import View.MenuView;
 public class JeuController {
 
 	public Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-    	public int width = (int)screenSize.getWidth();
-    	public int height = (int)screenSize.getHeight();
-	
+    public int width = (int)screenSize.getWidth();
+    public int height = (int)screenSize.getHeight();
+	private ChargerPartieModel chargerPartie;
 	private JeuView view;
 	private JeuModel model;
+	private int numPartie;
 	
 	public JeuController(JeuView view, JeuModel model, int numPartie) {
 		this.view = view;
 		this.model = model;
+		this.numPartie = numPartie;
+		System.out.print(numPartie);
 		view.setVisible(true);
 		
 		/*view.getGrille().getListe().get(0).getButton().setIcon(model.getImgLettre('n'));*/
+		
+		chargerPartie = new ChargerPartieModel();
+		
+		chargerPlateau();
+		chargerScores();
+		placerLettre();
+		fonctionsDiverses();
+		
+		
+	}
+	
+	public void chargerScores() {
+		
+	}
+	
+	public void chargerPlateau() {
+		for(int i = 0; i < 225; i++) {
+			LettreModel lettre = new LettreModel(ChargerPartieModel.plateau[numPartie - 1].charAt(i));
+			
+			view.grille.getListe().get(i).add(lettre);
+			
+		}
+	}
+	
+	public void fonctionsDiverses() {
+		
+		view.getCollisions(1).addMouseListener(new MouseAdapter(){
+			public void mouseEntered(MouseEvent e){
+				view.getBoutonSauvegarder().setIcon(view.getImg(1));
 
+			}
+		});	
+		
+		view.getBoutonSauvegarder().addMouseListener(new MouseAdapter(){
+			public void mouseEntered(MouseEvent e){
+				view.getBoutonSauvegarder().setIcon(model.getSauvegarderActive());
+
+			}
+			public void mousePressed(MouseEvent e){
+				sauvegarder();
+
+			}
+		});	
+		
+		view.getBack().addMouseListener(new MouseAdapter(){
+			public void mouseEntered(MouseEvent e){
+				view.getBoutonSauvegarder().setIcon(view.getImg(1));
+
+			}
+			public void mousePressed(MouseEvent e){
+				/*MenuView view = new MenuView();
+				
+				MenuModel model = new MenuModel();
+				
+				MenuController controller = new MenuController(view, model);*/
+				
+				CreerPartieView creerPartieView = new CreerPartieView();
+				CreerPartieModel creerPartieModel = new CreerPartieModel();
+				CreerPartieController creerPartieController = new CreerPartieController(creerPartieView, creerPartieModel);
+
+				view.setVisible(false);
+				
+			}
+		});	
+		
+		view.getCollisions(2).addMouseListener(new MouseAdapter(){
+			public void mouseEntered(MouseEvent e){
+				view.getBoutonSoumettre().setIcon(view.getImg(2));
+
+			}
+		});	
+		
+		view.getBoutonSoumettre().addMouseListener(new MouseAdapter(){
+			public void mouseEntered(MouseEvent e){
+				view.getBoutonSoumettre().setIcon(model.getSoumettreActive());
+
+			}
+			public void mousePressed(MouseEvent e){
+				
+
+			}
+		});	
+	}
+	
+	public void placerLettre() {
 		/* placer une lettre */
 		view.lettre1.addMouseListener(new MouseAdapter(){
 			public void mouseReleased(MouseEvent e){
@@ -134,34 +223,6 @@ public class JeuController {
 				view.getLettreMove().setBounds((int)MouseInfo.getPointerInfo().getLocation().getX()-((width-1000)/2)-22,(int)MouseInfo.getPointerInfo().getLocation().getY()-((height-800)/2)-22,45,45);
 			}
 		});
-		
-		view.getBoutonSauvegarder().addMouseListener(new MouseAdapter(){
-			public void mouseEntered(MouseEvent e){
-				view.getBoutonSauvegarder().setIcon(model.getSauvegarderActive());
-
-			}
-			public void mousePressed(MouseEvent e){
-				sauvegarder();
-
-			}
-		});	
-		
-		view.getBack().addMouseListener(new MouseAdapter(){
-			public void mousePressed(MouseEvent e){
-				/*MenuView view = new MenuView();
-				
-				MenuModel model = new MenuModel();
-				
-				MenuController controller = new MenuController(view, model);*/
-				
-				CreerPartieView creerPartieView = new CreerPartieView();
-				CreerPartieModel creerPartieModel = new CreerPartieModel();
-				CreerPartieController creerPartieController = new CreerPartieController(creerPartieView, creerPartieModel);
-
-				view.setVisible(false);
-				
-			}
-		});	
 	}
 	
 	public void sauvegarder() {

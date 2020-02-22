@@ -214,7 +214,7 @@ public class CreerPartieController {
 					
 					
 					try {
-						if( getNumPartie() == -1) {
+						if( getNumPartie() == 6) {
 							String msg = "<html>Vous avez atteint le nombre limite de parties !<br> "
 									+ "Re-creer une partie effacera les sauvegardes precedentes. <br> "
 									+ "Etes-vous sur de vouloir continuer ?</html>";
@@ -256,16 +256,18 @@ public class CreerPartieController {
 
 	    switch(length ) {
 			case 1:
-				return 1;
+				return 0;
 			case 14:
-				return 2;
+				return 1;
 			case 27:
-				return 3;
+				return 2;
 			case 40:
-				return 4;
+				return 3;
 			case 53:
-				return 5;
+				return 4;
 			case 66:
+				return 5;
+			case 79:
 				return 6;
 		}
 		return -1;
