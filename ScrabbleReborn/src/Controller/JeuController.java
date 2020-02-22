@@ -1,5 +1,8 @@
 package Controller;
 
+import java.awt.Dimension;
+import java.awt.MouseInfo;
+import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -11,6 +14,10 @@ import View.JeuView;
 import View.MenuView;
 
 public class JeuController {
+
+	public Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+    	public int width = (int)screenSize.getWidth();
+    	public int height = (int)screenSize.getHeight();
 	
 	private JeuView view;
 	private JeuModel model;
@@ -20,7 +27,113 @@ public class JeuController {
 		this.model = model;
 		view.setVisible(true);
 		
-		view.getGrille().getListe().get(0).getButton().setIcon(model.getImgLettre('n'));
+		/*view.getGrille().getListe().get(0).getButton().setIcon(model.getImgLettre('n'));*/
+
+		/* placer une lettre */
+		view.lettre1.addMouseListener(new MouseAdapter(){
+			public void mouseReleased(MouseEvent e){
+				JeuModel.setLettre((int)MouseInfo.getPointerInfo().getLocation().getX()-((width-1000)/2)-22,(int)MouseInfo.getPointerInfo().getLocation().getY()-((height-800)/2)-22, view.lettre1, view.getGrille(), view.getLettres());
+				view.getLettreMove().remove(view.lettre1);
+				view.getLettreMove().setBounds(2000,2000,45,45);
+			}
+		});
+		view.lettre1.addMouseMotionListener(new MouseAdapter(){
+			public void mouseDragged(MouseEvent e){
+				view.lettre1.setBounds(0,0,45,45);
+				view.getLettreMove().add(view.lettre1,0);
+				view.getLettreMove().setBounds((int)MouseInfo.getPointerInfo().getLocation().getX()-((width-1000)/2)-22,(int)MouseInfo.getPointerInfo().getLocation().getY()-((height-800)/2)-22,45,45);
+			}
+		});
+		
+		view.lettre2.addMouseListener(new MouseAdapter(){
+			public void mouseReleased(MouseEvent e){
+				JeuModel.setLettre((int)MouseInfo.getPointerInfo().getLocation().getX()-((width-1000)/2)-22,(int)MouseInfo.getPointerInfo().getLocation().getY()-((height-800)/2)-22, view.lettre2, view.getGrille(), view.getLettres());
+				view.getLettreMove().remove(view.lettre2);
+				view.getLettreMove().setBounds(2000,2000,45,45);
+			}
+		});
+		view.lettre2.addMouseMotionListener(new MouseAdapter(){
+			public void mouseDragged(MouseEvent e){
+				view.lettre2.setBounds(0,0,45,45);
+				view.getLettreMove().add(view.lettre2,0);
+				view.getLettreMove().setBounds((int)MouseInfo.getPointerInfo().getLocation().getX()-((width-1000)/2)-22,(int)MouseInfo.getPointerInfo().getLocation().getY()-((height-800)/2)-22,45,45);
+			}
+		});
+		
+		view.lettre3.addMouseListener(new MouseAdapter(){
+			public void mouseReleased(MouseEvent e){
+				JeuModel.setLettre((int)MouseInfo.getPointerInfo().getLocation().getX()-((width-1000)/2)-22,(int)MouseInfo.getPointerInfo().getLocation().getY()-((height-800)/2)-22, view.lettre3, view.getGrille(), view.getLettres());
+				view.getLettreMove().remove(view.lettre3);
+				view.getLettreMove().setBounds(2000,2000,45,45);
+			}
+		});
+		view.lettre3.addMouseMotionListener(new MouseAdapter(){
+			public void mouseDragged(MouseEvent e){
+				view.lettre3.setBounds(0,0,45,45);
+				view.getLettreMove().add(view.lettre3,0);
+				view.getLettreMove().setBounds((int)MouseInfo.getPointerInfo().getLocation().getX()-((width-1000)/2)-22,(int)MouseInfo.getPointerInfo().getLocation().getY()-((height-800)/2)-22,45,45);
+			}
+		});
+		
+		view.lettre4.addMouseListener(new MouseAdapter(){
+			public void mouseReleased(MouseEvent e){
+				JeuModel.setLettre((int)MouseInfo.getPointerInfo().getLocation().getX()-((width-1000)/2)-22,(int)MouseInfo.getPointerInfo().getLocation().getY()-((height-800)/2)-22, view.lettre4, view.getGrille(), view.getLettres());
+				view.getLettreMove().remove(view.lettre4);
+				view.getLettreMove().setBounds(2000,2000,45,45);
+			}
+		});
+		view.lettre4.addMouseMotionListener(new MouseAdapter(){
+			public void mouseDragged(MouseEvent e){
+				view.lettre4.setBounds(0,0,45,45);
+				view.getLettreMove().add(view.lettre4,0);
+				view.getLettreMove().setBounds((int)MouseInfo.getPointerInfo().getLocation().getX()-((width-1000)/2)-22,(int)MouseInfo.getPointerInfo().getLocation().getY()-((height-800)/2)-22,45,45);
+			}
+		});
+		
+		view.lettre5.addMouseListener(new MouseAdapter(){
+			public void mouseReleased(MouseEvent e){
+				JeuModel.setLettre((int)MouseInfo.getPointerInfo().getLocation().getX()-((width-1000)/2)-22,(int)MouseInfo.getPointerInfo().getLocation().getY()-((height-800)/2)-22, view.lettre5, view.getGrille(), view.getLettres());
+				view.getLettreMove().remove(view.lettre5);
+				view.getLettreMove().setBounds(2000,2000,45,45);
+			}
+		});
+		view.lettre5.addMouseMotionListener(new MouseAdapter(){
+			public void mouseDragged(MouseEvent e){
+				view.lettre5.setBounds(0,0,45,45);
+				view.getLettreMove().add(view.lettre5,0);
+				view.getLettreMove().setBounds((int)MouseInfo.getPointerInfo().getLocation().getX()-((width-1000)/2)-22,(int)MouseInfo.getPointerInfo().getLocation().getY()-((height-800)/2)-22,45,45);
+			}
+		});
+		
+		view.lettre6.addMouseListener(new MouseAdapter(){
+			public void mouseReleased(MouseEvent e){
+				JeuModel.setLettre((int)MouseInfo.getPointerInfo().getLocation().getX()-((width-1000)/2)-22,(int)MouseInfo.getPointerInfo().getLocation().getY()-((height-800)/2)-22, view.lettre6, view.getGrille(), view.getLettres());
+				view.getLettreMove().remove(view.lettre6);
+				view.getLettreMove().setBounds(2000,2000,45,45);
+			}
+		});
+		view.lettre6.addMouseMotionListener(new MouseAdapter(){
+			public void mouseDragged(MouseEvent e){
+				view.lettre6.setBounds(0,0,45,45);
+				view.getLettreMove().add(view.lettre6,0);
+				view.getLettreMove().setBounds((int)MouseInfo.getPointerInfo().getLocation().getX()-((width-1000)/2)-22,(int)MouseInfo.getPointerInfo().getLocation().getY()-((height-800)/2)-22,45,45);
+			}
+		});
+		
+		view.lettre7.addMouseListener(new MouseAdapter(){
+			public void mouseReleased(MouseEvent e){
+				JeuModel.setLettre((int)MouseInfo.getPointerInfo().getLocation().getX()-((width-1000)/2)-22,(int)MouseInfo.getPointerInfo().getLocation().getY()-((height-800)/2)-22, view.lettre7, view.getGrille(), view.getLettres());
+				view.getLettreMove().remove(view.lettre7);
+				view.getLettreMove().setBounds(2000,2000,45,45);
+			}
+		});
+		view.lettre7.addMouseMotionListener(new MouseAdapter(){
+			public void mouseDragged(MouseEvent e){
+				view.lettre7.setBounds(0,0,45,45);
+				view.getLettreMove().add(view.lettre7,0);
+				view.getLettreMove().setBounds((int)MouseInfo.getPointerInfo().getLocation().getX()-((width-1000)/2)-22,(int)MouseInfo.getPointerInfo().getLocation().getY()-((height-800)/2)-22,45,45);
+			}
+		});
 		
 		view.getBoutonSauvegarder().addMouseListener(new MouseAdapter(){
 			public void mouseEntered(MouseEvent e){
