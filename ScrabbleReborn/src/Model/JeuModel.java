@@ -48,8 +48,9 @@ public class JeuModel {
 						if(caseDispo(i, j, grille)) {
 							LettreModel now = new LettreModel(lettre.getVal());
 							grille.getListe().get(j+15*i).add(now);
-							grille.getListe().get(j+15*i).val =now.getVal();
+							grille.getListe().get(j+15*i).val = now.getVal();
 							grille.revalidate();
+							Joueur.getListeJoueur().get(0).getListeLettrePos().add(j+15*i);
 							canSet=true;
 						}
 					}
@@ -61,5 +62,12 @@ public class JeuModel {
 			panel.add(lettre);
 			panel.revalidate();
 		}
+
 	}
+
+	static public void lecture(){
+		String motRetourner = "";
+
+	}
+
 }

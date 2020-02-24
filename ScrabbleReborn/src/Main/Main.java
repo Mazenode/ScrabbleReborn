@@ -2,10 +2,8 @@ package Main;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import Controller.ChargerPartieController;
-import Controller.CreerJoueurController;
-import Controller.CreerPartieController;
-import Controller.MenuController;
+
+import Controller.*;
 import Model.ChargerPartieModel;
 import Model.CreerJoueurModel;
 import Model.CreerPartieModel;
@@ -27,14 +25,14 @@ public class Main {
 		
 		MenuController controller = new MenuController(view, model);*/
 		
-		/*JeuView jeuView = new JeuView();
+		JeuView jeuView = new JeuView();
 		JeuModel jeuModel = new JeuModel();
-		JeuController jeuController = new JeuController(jeuView, jeuModel);*/
+		JeuController jeuController = new JeuController(jeuView, jeuModel,1);
 		
 		
-		ChargerPartieView view = new ChargerPartieView();
+		/*ChargerPartieView view = new ChargerPartieView();
 		ChargerPartieModel model = new ChargerPartieModel();
-		ChargerPartieController controller = new ChargerPartieController(view, model);
+		ChargerPartieController controller = new ChargerPartieController(view, model);*/
 	}
 	
 }

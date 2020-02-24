@@ -14,7 +14,7 @@ public class LettreModel extends JButton {
 		this.val = '\u0000';
 		this.setHorizontalAlignment(SwingConstants.CENTER);
 	}
-	
+
 	public LettreModel(char val) {
 		if(val != '#') {
 			this.setVisible(true);
@@ -35,4 +35,5 @@ public class LettreModel extends JButton {
 	public char getVal(){
 		return val;
 	}
+
 }
