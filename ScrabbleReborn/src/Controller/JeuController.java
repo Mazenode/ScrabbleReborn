@@ -29,13 +29,11 @@ public class JeuController {
 		this.view = view;
 		this.model = model;
 		this.numPartie = numPartie;
-		System.out.print(numPartie);
 		view.setVisible(true);
-		
-		/*view.getGrille().getListe().get(0).getButton().setIcon(model.getImgLettre('n'));*/
 		
 		chargerPartie = new ChargerPartieModel();
 		
+		//Fonctions de chargement
 		chargerPlateau();
 		chargerScores();
 		placerLettre();
@@ -45,7 +43,18 @@ public class JeuController {
 	}
 	
 	public void chargerScores() {
-		
+		int j = 0;
+		for(int i = (numPartie * 4 )- 4; i < numPartie * 4; i++) {
+			if(!ChargerPartieModel.listejoueurs[i].equals("null")) {
+				view.getPseudos(j).setText(ChargerPartieModel.listejoueurs[i]);
+				view.getScores(j).setText(Integer.toString(ChargerPartieModel.scores[i]));
+			}	
+			else {
+				view.getPseudos(j).setText("");
+				view.getScores(j).setText("");
+			}
+			j++;
+		}
 	}
 	
 	public void chargerPlateau() {

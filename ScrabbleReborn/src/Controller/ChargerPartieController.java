@@ -5,9 +5,11 @@ import java.awt.event.MouseEvent;
 
 import Model.ChargerPartieModel;
 import Model.CreerPartieModel;
+import Model.JeuModel;
 import Model.MenuModel;
 import View.ChargerPartieView;
 import View.CreerPartieView;
+import View.JeuView;
 import View.MenuView;
 
 public class ChargerPartieController {
@@ -148,6 +150,7 @@ public class ChargerPartieController {
 					view.fond1.setIcon(model.getImgFondClicked());
 					blocked = true;
 					setDelock();
+					launchGame(1);
 				}
 			}
 		});
@@ -164,6 +167,7 @@ public class ChargerPartieController {
 					view.fond2.setIcon(model.getImgFondClicked());
 					blocked = true;
 					setDelock();
+					launchGame(2);
 				}
 			}
 		});
@@ -180,6 +184,7 @@ public class ChargerPartieController {
 					view.fond3.setIcon(model.getImgFondClicked());
 					blocked = true;
 					setDelock();
+					launchGame(3);
 				}
 			}
 		});
@@ -196,6 +201,7 @@ public class ChargerPartieController {
 					view.fond4.setIcon(model.getImgFondClicked());
 					blocked = true;
 					setDelock();
+					launchGame(4);
 				}
 			}
 		});
@@ -212,6 +218,7 @@ public class ChargerPartieController {
 					view.fond5.setIcon(model.getImgFondClicked());
 					blocked = true;
 					setDelock();
+					launchGame(5);
 				}
 			}
 		});
@@ -228,6 +235,7 @@ public class ChargerPartieController {
 					view.fond6.setIcon(model.getImgFondClicked());
 					blocked = true;
 					setDelock();
+					launchGame(6);
 				}
 			}
 		});
@@ -240,5 +248,16 @@ public class ChargerPartieController {
 		view.fond4.setIcon(view.getImageFond());
 		view.fond5.setIcon(view.getImageFond());
 		view.fond6.setIcon(view.getImageFond());
+	}
+	
+	public void launchGame(int i) {
+		view.boutonLancerLaPartie.addMouseListener(new MouseAdapter() {
+			public void mousePressed(MouseEvent e){
+				JeuView jeuView = new JeuView();
+				JeuModel jeuModel = new JeuModel();
+				JeuController jeuController = new JeuController(jeuView, jeuModel, i);
+				view.setVisible(false);
+			}
+		});
 	}
 }

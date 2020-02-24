@@ -340,4 +340,32 @@ public class JeuView extends JFrame {
     		return imgSoumettreMot;
     	}
     }
+    
+    public JLabel getPseudos(int i) {
+    	switch(i) {
+    		case 0:
+    			return J1;
+    		case 1:
+    			return J2;
+    		case 2:
+    			return J3;
+    		case 3:
+    			return J4;
+    	}
+    	return null;
+    }
+    
+    public JLabel getScores(int i) {
+    	switch(i) {
+    		case 0:
+    			return scoreJ1;
+    		case 1:
+    			return scoreJ2;
+    		case 2:
+    			return scoreJ3;
+    		case 3:
+    			return scoreJ4;
+    	}
+    	return null;
+    }
 }

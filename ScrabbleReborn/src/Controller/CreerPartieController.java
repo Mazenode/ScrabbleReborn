@@ -30,14 +30,15 @@ public class CreerPartieController {
 	private JLabel boutonQuit; 
 	private int nbJoueur;
 	private String[] setJoueur;
+	private int etatBloquant;
 
 	public CreerPartieController(CreerPartieView view, CreerPartieModel model) {
 		this.view = view;
 		this.model = model;
 		view.setVisible(true);
 		nbJoueur = 0;
-		setJoueur = new String[4];
-		
+		setJoueur = new String[4];	
+		etatBloquant = 0;		
 	
 		//Boucle qui nous permet de remplacer les pseudos vides par les pseudos des joueurs.
 		for (int i = 1; i < model.getLength(); i++) {
@@ -204,7 +205,9 @@ public class CreerPartieController {
 	}
 	
 	public void creerPartie() {
-		if(nbJoueur > 1) {
+		if(nbJoueur > 1 && etatBloquant < 1) {
+			etatBloquant++;
+
 			view.getLancerPartie().setIcon(model.getLancerPartie(false));
 			view.getLancerPartie().addMouseListener(new MouseAdapter(){
 				public void mouseEntered(MouseEvent e){
@@ -225,6 +228,7 @@ public class CreerPartieController {
 							
 						}
 						else {
+							
 							ecritDonnees(false);
 						}
 					} catch (HeadlessException e1) {
