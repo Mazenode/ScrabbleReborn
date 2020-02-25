@@ -1,20 +1,17 @@
 package Model;
 
-import java.awt.Dimension;
-import java.awt.Toolkit;
-import java.util.ArrayList;
-
-import javax.swing.ImageIcon;
-import javax.swing.JPanel;
-import javax.swing.SwingConstants;
-
-import Model.Grille;
+import javax.swing.*;
+import java.awt.*;
+import java.io.*;
 
 public class JeuModel {
 	public static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	public static int width = (int)screenSize.getWidth();
 	public static int height = (int)screenSize.getHeight();
-    
+
+	private static int NombreDeLettreRestante = 120;
+	public char [] ListeLettreAlp;
+
 	private ImageIcon imgSauvegarderActive = new ImageIcon(this.getClass().getResource("/images/sauvegarder_active.png"));
 	private ImageIcon imgSoumettreActive = new ImageIcon(this.getClass().getResource("/images/soumettre_mot_active.png"));
 	
@@ -26,6 +23,9 @@ public class JeuModel {
 		return imgSoumettreActive;
 	}
 	
+	public JeuModel(){
+		ListeLettreAlp = new char[]{'a','b','c','d','e','f','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','x','y','z'};
+	}
 
 	public static boolean caseDispo(int i, int j, Grille grille) {
 		boolean dispo = true;
@@ -65,9 +65,37 @@ public class JeuModel {
 
 	}
 
-	static public void lecture(){
-		String motRetourner = "";
+	public char[] getListeLettreAlp() {
+		return ListeLettreAlp;
+	}
 
+	public static void setNbrDeLettreRestante(int compteur){
+		NombreDeLettreRestante -= compteur;
+		System.out.println(NombreDeLettreRestante);
+	}
+	public static int getNbrDeLettreRestante(){
+		return NombreDeLettreRestante;
+	}
+
+	static public boolean lecture() throws IOException {
+		System.out.println("LECTURE\n\n");
+		String motRetourner = "";
+		for (int i = 0; i < Joueur.getListeJoueur().get(0).getListeLettrePos().size(); i++) {
+			char e = Grille.getListe().get(Joueur.getListeJoueur().get(0).getListeLettrePos().get(i)).getVal();
+			motRetourner +=  e;
+		}
+		motRetourner = motRetourner.toUpperCase();
+		System.out.println(motRetourner);
+		BufferedReader buffer = new BufferedReader(new InputStreamReader (new FileInputStream((new File("Dictionnaire/D.txt")))));
+		String line = buffer.readLine();
+		while (!(line == null)) {
+			if (motRetourner.equals(line)) {
+				System.out.print("TRUE");
+				return true;
+			}
+			line = buffer.readLine();
+		}
+		return false;
 	}
 
 }

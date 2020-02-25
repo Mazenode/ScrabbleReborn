@@ -24,6 +24,7 @@ public class Joueur {
 	public ArrayList<Integer> getListeLettrePos(){
 		return listeLettrePos;
 	}
+
 	public static ArrayList<Joueur> getListeJoueur(){
 		return listeJoueur;
 	}

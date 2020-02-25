@@ -5,11 +5,15 @@ import java.awt.MouseInfo;
 import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
+import java.util.Random;
 
 import Model.*;
 import View.CreerPartieView;
 import View.JeuView;
 import View.MenuView;
+
+import javax.swing.*;
 
 public class JeuController {
 
@@ -19,7 +23,7 @@ public class JeuController {
 	private ChargerPartieModel chargerPartie;
 	private JeuView view;
 	private JeuModel model;
-	private int numPartie;
+	private int numPartie, compteur,element;
 	
 	public JeuController(JeuView view, JeuModel model, int numPartie) {
 		this.view = view;
@@ -80,7 +84,7 @@ public class JeuController {
 			}
 			public void mousePressed(MouseEvent e){
 				sauvegarder();
-				Joueur.getListeJoueur().get(0).print();
+
 
 			}
 		});	
@@ -111,18 +115,34 @@ public class JeuController {
 				view.getBoutonSoumettre().setIcon(view.getImg(2));
 
 			}
-		});	
-		
+		});
+
 		view.getBoutonSoumettre().addMouseListener(new MouseAdapter(){
 			public void mouseEntered(MouseEvent e){
 				view.getBoutonSoumettre().setIcon(model.getSoumettreActive());
 
 			}
 			public void mousePressed(MouseEvent e){
-				
-
+				Random rand = new Random();
+				Joueur.getListeJoueur().get(0).print();
+				compteur = Joueur.getListeJoueur().get(0).getListeLettrePos().size();
+				Model.JeuModel.setNbrDeLettreRestante(compteur);
+				view.getLettresRestantes().setText(Integer.toString(JeuModel.getNbrDeLettreRestante()));
+				try {
+					if(JeuModel.lecture()){
+						for (int i = 0; i <compteur ; i++) {
+							element = rand.nextInt(model.getListeLettreAlp().length);
+							view.lettre1 = new LettreModel(model.getListeLettreAlp()[element]);
+							view.getLettres().add(view.lettre1);
+							view.getLettres().revalidate();
+						}
+					}
+				} catch (IOException ex) {
+					ex.printStackTrace();
+				}
 			}
-		});	
+		});
+
 	}
 	
 	public void placerLettre() {
@@ -237,4 +257,9 @@ public class JeuController {
 	public void sauvegarder() {
 		
 	}
+
+	public int getCompteur(){
+		return compteur;
+	}
+
 }
