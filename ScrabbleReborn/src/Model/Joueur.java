@@ -6,7 +6,11 @@ public class Joueur {
 	private String name;
 	private int numPhoto;
 	private ArrayList<Integer> listeLettrePos = new ArrayList<Integer>();
+	public ArrayList<LettreModel> listeLettreChevalet = new ArrayList<LettreModel>();
 	private static ArrayList<Joueur> listeJoueur = new ArrayList<Joueur>();
+	public boolean isOnLine = false, isOnCol = false;
+	public int firstPos;
+	
 	public Joueur(String name, int numPhoto) {
 		this.name = name;
 		this.numPhoto = numPhoto;
