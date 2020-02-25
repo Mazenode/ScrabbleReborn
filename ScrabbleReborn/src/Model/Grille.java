@@ -14,7 +14,7 @@ import java.awt.Dimension;
 import java.awt.event.*;
 import java.util.ArrayList;
 
-public class    Grille extends JPanel {
+public class Grille extends JPanel {
     private static ArrayList<LettreModel> liste = new ArrayList<>();
     private static final int SIZE = 15;
     public Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -54,7 +54,6 @@ public class    Grille extends JPanel {
 
         add(p);
         this.setBackground(new Color(254, 211, 7));
-
     }
 
 

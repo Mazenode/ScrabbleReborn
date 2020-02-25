@@ -22,12 +22,10 @@ public class JeuView extends JFrame {
     private ImageIcon imgSoumettreMot = new ImageIcon(this.getClass().getResource("/images/soumettre_mot.png"));
     
     public Grille grille;
-    private JLabel back, sauvegarderCollisions, soumettreCollisions, titreScores, tourDe, tourDuJoueur,lettresRestantesFond, boutonSoumettreMot, imgJoueur, boutonSauvegarder;
+    private JLabel back, sauvegarderCollisions, soumettreCollisions, titreScores, tourDe, tourDuJoueur,lettresRestantesFond, lettresRestantes, boutonSoumettreMot, imgJoueur, boutonSauvegarder;
     private JLabel J1, J2, J3, J4, scoreJ1, scoreJ2, scoreJ3, scoreJ4;
     private JPanel ongletLettresRestantes,ongletSoumettreMot, lettres,ongletTour, lettreMove;
     public LettreModel lettre1, lettre2, lettre3, lettre4, lettre5, lettre6, lettre7;
-
-    public JLabel lettresRestantes;
     
     public JeuView(){
     	this.setSize(1000, 800);
@@ -184,8 +182,8 @@ public class JeuView extends JFrame {
         getContentPane().add(ongletLettresRestantes);
         ongletLettresRestantes.setLayout(new BorderLayout(0, 0));
         
-        // Jpanel du bag de lettre
-        lettresRestantes = new JLabel(Integer.toString(Model.JeuModel.getNbrDeLettreRestante()));
+        
+        lettresRestantes = new JLabel("102");
         lettresRestantes.setHorizontalAlignment(SwingConstants.CENTER);
         lettresRestantes.setFont(new Font("Lato", Font.BOLD, 70));
         lettresRestantes.setForeground(Color.WHITE);
@@ -297,6 +295,7 @@ public class JeuView extends JFrame {
         lettres.add(lettre5);
         lettres.add(lettre6);
         lettres.add(lettre7);
+        
         grille.revalidate();
     }
     
@@ -323,9 +322,7 @@ public class JeuView extends JFrame {
     public JPanel getLettreMove() {
     	return lettreMove;
     }
-
-    public JLabel getLettresRestantes(){return  lettresRestantes;}
-
+    
     public JLabel getCollisions(int i) {
     	if(i == 1) {
     		return sauvegarderCollisions;

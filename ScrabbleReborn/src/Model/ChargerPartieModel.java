@@ -57,7 +57,6 @@ public class ChargerPartieModel {
 			plateau[i] = listeResultats[j];
 			j+=13;
 		}
-
 	}
 	
 	public void setListeJoueur() {
