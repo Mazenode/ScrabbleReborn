@@ -128,13 +128,23 @@ public class JeuController {
 	public void placerLettre() {
 		/* placer une lettre */
 		view.lettre1.addMouseListener(new MouseAdapter(){
+			/* on place la lettre dans le tableau ou on la remets dans le chevalet */ 
 			public void mouseReleased(MouseEvent e){
-				JeuModel.setLettre((int)MouseInfo.getPointerInfo().getLocation().getX()-((width-1000)/2)-22,(int)MouseInfo.getPointerInfo().getLocation().getY()-((height-800)/2)-22, view.lettre1, view.getGrille(), view.getLettres());
+				JeuModel.setLettre((int)MouseInfo.getPointerInfo().getLocation().getX()-((width-1000)/2)-22,(int)MouseInfo.getPointerInfo().getLocation().getY()-((height-800)/2)-22, view.lettre1, view.getGrille(), view.getLettres(), Joueur.getListeJoueur().get(0));
 				view.getLettreMove().remove(view.lettre1);
 				view.getLettreMove().setBounds(2000,2000,45,45);
 
 			}
+			/* si la case etait pose dans la grille, on l enleve puis on donne le droit de refaire la pose de lettre */
+			public void mouseClicked(MouseEvent e){
+				/*if(Joueur.getListeJoueur().get(0).listeLettrePos.) {
+					view.lettre1.setHorizontalAlignment(SwingConstants.CENTER);
+					view.getLettres().add(view.lettre1);
+					view.getLettres().revalidate();
+				}*/
+			}
 		});
+		/* Drag and drop de la lettre */
 		view.lettre1.addMouseMotionListener(new MouseAdapter(){
 			public void mouseDragged(MouseEvent e){
 				view.lettre1.setBounds(0,0,45,45);
@@ -145,7 +155,7 @@ public class JeuController {
 		
 		view.lettre2.addMouseListener(new MouseAdapter(){
 			public void mouseReleased(MouseEvent e){
-				JeuModel.setLettre((int)MouseInfo.getPointerInfo().getLocation().getX()-((width-1000)/2)-22,(int)MouseInfo.getPointerInfo().getLocation().getY()-((height-800)/2)-22, view.lettre2, view.getGrille(), view.getLettres());
+				JeuModel.setLettre((int)MouseInfo.getPointerInfo().getLocation().getX()-((width-1000)/2)-22,(int)MouseInfo.getPointerInfo().getLocation().getY()-((height-800)/2)-22, view.lettre2, view.getGrille(), view.getLettres(), Joueur.getListeJoueur().get(0));
 				view.getLettreMove().remove(view.lettre2);
 				view.getLettreMove().setBounds(2000,2000,45,45);
 			}
@@ -160,7 +170,7 @@ public class JeuController {
 		
 		view.lettre3.addMouseListener(new MouseAdapter(){
 			public void mouseReleased(MouseEvent e){
-				JeuModel.setLettre((int)MouseInfo.getPointerInfo().getLocation().getX()-((width-1000)/2)-22,(int)MouseInfo.getPointerInfo().getLocation().getY()-((height-800)/2)-22, view.lettre3, view.getGrille(), view.getLettres());
+				JeuModel.setLettre((int)MouseInfo.getPointerInfo().getLocation().getX()-((width-1000)/2)-22,(int)MouseInfo.getPointerInfo().getLocation().getY()-((height-800)/2)-22, view.lettre2, view.getGrille(), view.getLettres(), Joueur.getListeJoueur().get(0));
 				view.getLettreMove().remove(view.lettre3);
 				view.getLettreMove().setBounds(2000,2000,45,45);
 			}
@@ -175,7 +185,7 @@ public class JeuController {
 		
 		view.lettre4.addMouseListener(new MouseAdapter(){
 			public void mouseReleased(MouseEvent e){
-				JeuModel.setLettre((int)MouseInfo.getPointerInfo().getLocation().getX()-((width-1000)/2)-22,(int)MouseInfo.getPointerInfo().getLocation().getY()-((height-800)/2)-22, view.lettre4, view.getGrille(), view.getLettres());
+				JeuModel.setLettre((int)MouseInfo.getPointerInfo().getLocation().getX()-((width-1000)/2)-22,(int)MouseInfo.getPointerInfo().getLocation().getY()-((height-800)/2)-22, view.lettre2, view.getGrille(), view.getLettres(), Joueur.getListeJoueur().get(0));
 				view.getLettreMove().remove(view.lettre4);
 				view.getLettreMove().setBounds(2000,2000,45,45);
 			}
@@ -190,7 +200,7 @@ public class JeuController {
 		
 		view.lettre5.addMouseListener(new MouseAdapter(){
 			public void mouseReleased(MouseEvent e){
-				JeuModel.setLettre((int)MouseInfo.getPointerInfo().getLocation().getX()-((width-1000)/2)-22,(int)MouseInfo.getPointerInfo().getLocation().getY()-((height-800)/2)-22, view.lettre5, view.getGrille(), view.getLettres());
+				JeuModel.setLettre((int)MouseInfo.getPointerInfo().getLocation().getX()-((width-1000)/2)-22,(int)MouseInfo.getPointerInfo().getLocation().getY()-((height-800)/2)-22, view.lettre2, view.getGrille(), view.getLettres(), Joueur.getListeJoueur().get(0));
 				view.getLettreMove().remove(view.lettre5);
 				view.getLettreMove().setBounds(2000,2000,45,45);
 			}
@@ -205,7 +215,7 @@ public class JeuController {
 		
 		view.lettre6.addMouseListener(new MouseAdapter(){
 			public void mouseReleased(MouseEvent e){
-				JeuModel.setLettre((int)MouseInfo.getPointerInfo().getLocation().getX()-((width-1000)/2)-22,(int)MouseInfo.getPointerInfo().getLocation().getY()-((height-800)/2)-22, view.lettre6, view.getGrille(), view.getLettres());
+				JeuModel.setLettre((int)MouseInfo.getPointerInfo().getLocation().getX()-((width-1000)/2)-22,(int)MouseInfo.getPointerInfo().getLocation().getY()-((height-800)/2)-22, view.lettre2, view.getGrille(), view.getLettres(), Joueur.getListeJoueur().get(0));
 				view.getLettreMove().remove(view.lettre6);
 				view.getLettreMove().setBounds(2000,2000,45,45);
 			}
@@ -220,7 +230,7 @@ public class JeuController {
 		
 		view.lettre7.addMouseListener(new MouseAdapter(){
 			public void mouseReleased(MouseEvent e){
-				JeuModel.setLettre((int)MouseInfo.getPointerInfo().getLocation().getX()-((width-1000)/2)-22,(int)MouseInfo.getPointerInfo().getLocation().getY()-((height-800)/2)-22, view.lettre7, view.getGrille(), view.getLettres());
+				JeuModel.setLettre((int)MouseInfo.getPointerInfo().getLocation().getX()-((width-1000)/2)-22,(int)MouseInfo.getPointerInfo().getLocation().getY()-((height-800)/2)-22, view.lettre2, view.getGrille(), view.getLettres(), Joueur.getListeJoueur().get(0));
 				view.getLettreMove().remove(view.lettre7);
 				view.getLettreMove().setBounds(2000,2000,45,45);
 			}
