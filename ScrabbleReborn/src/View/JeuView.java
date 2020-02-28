@@ -371,4 +371,12 @@ public class JeuView extends JFrame {
     	}
     	return null;
     }
+
+    public JLabel getTourDuJoueur(){
+        return tourDuJoueur;
+    }
+
+    public JLabel getImgJoueur(){
+        return imgJoueur;
+    }
 }

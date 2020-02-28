@@ -6,6 +6,7 @@ import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Random;
 
 import Model.*;
@@ -23,12 +24,18 @@ public class JeuController {
 	private ChargerPartieModel chargerPartie;
 	private JeuView view;
 	private JeuModel model;
-	private int numPartie, compteur,element;
+	private static int numPartie, compteur,element,joueurAyantJoue,compteurJoueur;
+	private String[] listeResultats,listePseudo;
+	private static ArrayList<Joueur> joueurs;
 	
 	public JeuController(JeuView view, JeuModel model, int numPartie) {
 		this.view = view;
 		this.model = model;
 		this.numPartie = numPartie;
+		listeResultats = new String [9];
+		listePseudo = new String [4];
+		joueurAyantJoue = 0;
+		compteurJoueur = 0;
 		view.setVisible(true);
 		
 		chargerPartie = new ChargerPartieModel();
@@ -41,13 +48,55 @@ public class JeuController {
 		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		placerLettre();
 		fonctionsDiverses();
+		initTour();
 		
 	}
-	
+
+	public void initTour() {
+		if(joueurAyantJoue == 0) {
+			view.getTourDuJoueur().setText(joueurs.get(0).getPseudo());
+			view.getImgJoueur().setIcon(model.getImgJoueur(1));
+			joueurAyantJoue++;
+		}
+
+		else if(joueurAyantJoue == 1) {
+			if(compteurJoueur == 2 || compteurJoueur == 3 || compteurJoueur == 4) {
+				view.getTourDuJoueur().setText(joueurs.get(1).getPseudo());
+				joueurAyantJoue ++;
+			}
+			else {
+				joueurAyantJoue = 0;
+			}
+		}
+
+		else if(joueurAyantJoue == 2) {
+			if(compteurJoueur == 3 || compteurJoueur == 4) {
+				view.getTourDuJoueur().setText(joueurs.get(2).getPseudo());
+				joueurAyantJoue ++;
+			}
+			else {
+				joueurAyantJoue = 0;
+			}
+		}
+
+		else if(joueurAyantJoue == 3) {
+			if(compteurJoueur == 4) {
+				view.getTourDuJoueur().setText(joueurs.get(3).getPseudo());
+				joueurAyantJoue = 0;
+			}
+		}
+	}
+
+
 	public void chargerScores() {
 		int j = 0;
+		joueurs = new ArrayList<Joueur>();
 		for(int i = (numPartie * 4 )- 4; i < numPartie * 4; i++) {
 			if(!ChargerPartieModel.listejoueurs[i].equals("null")) {
+				compteurJoueur++;
+				Joueur joueur = new Joueur(ChargerPartieModel.listejoueurs[i],1);
+				joueur.setScore(ChargerPartieModel.scores[i]);
+				joueurs.add(joueur);
 				view.getPseudos(j).setText(ChargerPartieModel.listejoueurs[i]);
 				view.getScores(j).setText(Integer.toString(ChargerPartieModel.scores[i]));
 			}	
@@ -140,6 +189,7 @@ public class JeuController {
 				} catch (IOException ex) {
 					ex.printStackTrace();
 				}
+				initTour();
 			}
 		});
 
