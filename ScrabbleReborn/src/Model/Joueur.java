@@ -7,6 +7,8 @@ public class Joueur {
 	private int numPhoto,score;
 	private ArrayList<Integer> listeLettrePos = new ArrayList<Integer>();
 	private static ArrayList<Joueur> listeJoueur = new ArrayList<Joueur>();
+	public boolean isOnLine = false, isOnCol = false;
+	public int firstPos;
 
 
 	public Joueur(String name, int numPhoto) {
@@ -35,8 +37,14 @@ public class Joueur {
 		this.score = i;
 	}
 
+	public boolean getIsOnLine(){
+		return isOnLine;
+	}
+	public boolean getIsOnCol(){
+		return isOnCol;
+	}
 
-	public void print(){
+	public void printLettrePos(){
 		for (int i : listeLettrePos) {
 			System.out.println(i);
 		}

@@ -173,22 +173,281 @@ public class JeuController {
 			}
 			public void mousePressed(MouseEvent e){
 				Random rand = new Random();
-				Joueur.getListeJoueur().get(0).print();
-				compteur = Joueur.getListeJoueur().get(0).getListeLettrePos().size();
-				Model.JeuModel.setNbrDeLettreRestante(compteur);
-				view.getLettresRestantes().setText(Integer.toString(JeuModel.getNbrDeLettreRestante()));
+				Joueur.getListeJoueur().get(0).printLettrePos();
+				//compteur = Joueur.getListeJoueur().get(0).getListeLettrePos().size();
+				//Model.JeuModel.setNbrDeLettreRestante(compteur);
+				//view.getLettresRestantes().setText(Integer.toString(JeuModel.getNbrDeLettreRestante()));
 				try {
 					if(JeuModel.lecture()){
-						for (int i = 0; i <compteur ; i++) {
+						compteur = Joueur.getListeJoueur().get(0).getListeLettrePos().size();
+						Model.JeuModel.setNbrDeLettreRestante(compteur);
+						view.getLettresRestantes().setText(Integer.toString(JeuModel.getNbrDeLettreRestante()));
+						//for (int i = 0; i <compteur ; i++) {
+						//element = rand.nextInt(model.getListeLettreAlp().length);
+							//view.lettre1 = new LettreModel(model.getListeLettreAlp()[element]);
+							//view.getLettres().add(view.lettre1);
+							//view.getLettres().revalidate();*/
+						
+						//}
+						/* On remet les variables � zero */
+						Joueur.getListeJoueur().get(0).isOnLine = false; 
+						Joueur.getListeJoueur().get(0).isOnCol = false;
+						Joueur.getListeJoueur().get(0).firstPos=-1;
+						
+						/* Pour chaque lettre, si elle a ete pose, on r�cupere la pos ou elle a ete pos et on fige l'image */
+						if(view.lettre1.posLettre!=300) {
+							for(int i=0; i<Joueur.getListeJoueur().get(0).getListeLettrePos().size(); i++) {
+								if (Joueur.getListeJoueur().get(0).getListeLettrePos().get(i)==view.lettre1.posLettre) {
+									LettreModel lettre = new LettreModel(view.lettre1.val);
+									view.getGrille().getListe().get(Joueur.getListeJoueur().get(0).getListeLettrePos().get(i)).add(lettre,0);
+									view.getGrille().getListe().get(Joueur.getListeJoueur().get(0).getListeLettrePos().get(i)).val = lettre.val;
+									Joueur.getListeJoueur().get(0).getListeLettrePos().remove(i);
+									break;
+								}
+							}
+							/* puis on remet une nouvelle lettre dans le chevalet */
 							element = rand.nextInt(model.getListeLettreAlp().length);
-							view.lettre1 = new LettreModel(model.getListeLettreAlp()[element]);
+							view.lettre1.val = model.getListeLettreAlp()[element];
+							view.lettre1.image = new ImageIcon(this.getClass().getResource("/images/"+view.lettre1.val+".png"));
+							view.lettre1.setIcon(view.lettre4.image);
+							view.lettre1.posLettre=300;
+							view.lettre1.setHorizontalAlignment(SwingConstants.CENTER);
 							view.getLettres().add(view.lettre1);
+							view.getLettres().revalidate();
+						}
+						/* Pour chaque lettre, si elle a ete pose, on r�cupere la pos ou elle a ete pos et on fige l'image */
+						if(view.lettre2.posLettre!=300) {
+							for(int i=0; i<Joueur.getListeJoueur().get(0).getListeLettrePos().size(); i++) {
+								if (Joueur.getListeJoueur().get(0).getListeLettrePos().get(i)==view.lettre2.posLettre) {
+									LettreModel lettre = new LettreModel(view.lettre2.val);
+									view.getGrille().getListe().get(Joueur.getListeJoueur().get(0).getListeLettrePos().get(i)).add(lettre,0);
+									view.getGrille().getListe().get(Joueur.getListeJoueur().get(0).getListeLettrePos().get(i)).val = lettre.val;
+									Joueur.getListeJoueur().get(0).getListeLettrePos().remove(i);
+									break;
+								}
+							}
+							/* puis on remet une nouvelle lettre dans le chevalet */
+							element = rand.nextInt(model.getListeLettreAlp().length);
+							view.lettre2.val = model.getListeLettreAlp()[element];
+							view.lettre2.image = new ImageIcon(this.getClass().getResource("/images/"+view.lettre2.val+".png"));
+							view.lettre2.setIcon(view.lettre2.image);
+							view.lettre2.posLettre=300;
+							view.lettre2.setHorizontalAlignment(SwingConstants.CENTER);
+							view.getLettres().add(view.lettre2);
+							view.getLettres().revalidate();
+						}
+						/* Pour chaque lettre, si elle a ete pose, on r�cupere la pos ou elle a ete pos et on fige l'image */
+						if(view.lettre3.posLettre!=300) {
+							for(int i=0; i<Joueur.getListeJoueur().get(0).getListeLettrePos().size(); i++) {
+								if (Joueur.getListeJoueur().get(0).getListeLettrePos().get(i)==view.lettre3.posLettre) {
+									LettreModel lettre = new LettreModel(view.lettre3.val);
+									view.getGrille().getListe().get(Joueur.getListeJoueur().get(0).getListeLettrePos().get(i)).add(lettre,0);
+									view.getGrille().getListe().get(Joueur.getListeJoueur().get(0).getListeLettrePos().get(i)).val = lettre.val;
+									Joueur.getListeJoueur().get(0).getListeLettrePos().remove(i);
+									break;
+								}
+							}
+							/* puis on remet une nouvelle lettre dans le chevalet */
+							element = rand.nextInt(model.getListeLettreAlp().length);
+							view.lettre3.val = model.getListeLettreAlp()[element];
+							view.lettre3.image = new ImageIcon(this.getClass().getResource("/images/"+view.lettre3.val+".png"));
+							view.lettre3.setIcon(view.lettre3.image);
+							view.lettre3.posLettre=300;
+							view.lettre3.setHorizontalAlignment(SwingConstants.CENTER);
+							view.getLettres().add(view.lettre3);
+							view.getLettres().revalidate();
+						}
+						/* Pour chaque lettre, si elle a ete pose, on r�cupere la pos ou elle a ete pos et on fige l'image */
+						if(view.lettre4.posLettre!=300) {
+							for(int i=0; i<Joueur.getListeJoueur().get(0).getListeLettrePos().size(); i++) {
+								if (Joueur.getListeJoueur().get(0).getListeLettrePos().get(i)==view.lettre4.posLettre) {
+									LettreModel lettre = new LettreModel(view.lettre4.val);
+									view.getGrille().getListe().get(Joueur.getListeJoueur().get(0).getListeLettrePos().get(i)).add(lettre,0);
+									view.getGrille().getListe().get(Joueur.getListeJoueur().get(0).getListeLettrePos().get(i)).val = lettre.val;
+									Joueur.getListeJoueur().get(0).getListeLettrePos().remove(i);
+									break;
+								}
+							}
+							/* puis on remet une nouvelle lettre dans le chevalet */
+							element = rand.nextInt(model.getListeLettreAlp().length);
+							view.lettre4.val = model.getListeLettreAlp()[element];
+							view.lettre4.image = new ImageIcon(this.getClass().getResource("/images/"+view.lettre4.val+".png"));
+							view.lettre4.setIcon(view.lettre4.image);
+							view.lettre4.posLettre=300;
+							view.lettre4.setHorizontalAlignment(SwingConstants.CENTER);
+							view.getLettres().add(view.lettre4);
+							view.getLettres().revalidate();
+						}
+						/* Pour chaque lettre, si elle a ete pose, on r�cupere la pos ou elle a ete pos et on fige l'image */
+						if(view.lettre5.posLettre!=300) {
+							for(int i=0; i<Joueur.getListeJoueur().get(0).getListeLettrePos().size(); i++) {
+								if (Joueur.getListeJoueur().get(0).getListeLettrePos().get(i)==view.lettre5.posLettre) {
+									LettreModel lettre = new LettreModel(view.lettre5.val);
+									view.getGrille().getListe().get(Joueur.getListeJoueur().get(0).getListeLettrePos().get(i)).add(lettre,0);
+									view.getGrille().getListe().get(Joueur.getListeJoueur().get(0).getListeLettrePos().get(i)).val = lettre.val;
+									Joueur.getListeJoueur().get(0).getListeLettrePos().remove(i);
+									break;
+								}
+							}
+							/* puis on remet une nouvelle lettre dans le chevalet */
+							element = rand.nextInt(model.getListeLettreAlp().length);
+							view.lettre5.val = model.getListeLettreAlp()[element];
+							view.lettre5.image = new ImageIcon(this.getClass().getResource("/images/"+view.lettre5.val+".png"));
+							view.lettre5.setIcon(view.lettre5.image);
+							view.lettre5.posLettre=300;
+							view.lettre5.setHorizontalAlignment(SwingConstants.CENTER);
+							view.getLettres().add(view.lettre5);
+							view.getLettres().revalidate();
+						}
+						/* Pour chaque lettre, si elle a ete pose, on r�cupere la pos ou elle a ete pos et on fige l'image */
+						if(view.lettre6.posLettre!=300) {
+							for(int i=0; i<Joueur.getListeJoueur().get(0).getListeLettrePos().size(); i++) {
+								if (Joueur.getListeJoueur().get(0).getListeLettrePos().get(i)==view.lettre6.posLettre) {
+									LettreModel lettre = new LettreModel(view.lettre6.val);
+									view.getGrille().getListe().get(Joueur.getListeJoueur().get(0).getListeLettrePos().get(i)).add(lettre,0);
+									view.getGrille().getListe().get(Joueur.getListeJoueur().get(0).getListeLettrePos().get(i)).val = lettre.val;
+									Joueur.getListeJoueur().get(0).getListeLettrePos().remove(i);
+									break;
+								}
+							}
+							/* puis on remet une nouvelle lettre dans le chevalet */
+							element = rand.nextInt(model.getListeLettreAlp().length);
+							view.lettre6.val = model.getListeLettreAlp()[element];
+							view.lettre6.image = new ImageIcon(this.getClass().getResource("/images/"+view.lettre6.val+".png"));
+							view.lettre6.setIcon(view.lettre6.image);
+							view.lettre6.posLettre=300;
+							view.lettre6.setHorizontalAlignment(SwingConstants.CENTER);
+							view.getLettres().add(view.lettre6);
+							view.getLettres().revalidate();
+						}
+						/* Pour chaque lettre, si elle a ete pose, on r�cupere la pos ou elle a ete pos et on fige l'image */
+						if(view.lettre7.posLettre!=300) {
+							for(int i=0; i<Joueur.getListeJoueur().get(0).getListeLettrePos().size(); i++) {
+								if (Joueur.getListeJoueur().get(0).getListeLettrePos().get(i)==view.lettre7.posLettre) {
+									LettreModel lettre = new LettreModel(view.lettre7.val);
+									view.getGrille().getListe().get(Joueur.getListeJoueur().get(0).getListeLettrePos().get(i)).add(lettre,0);
+									view.getGrille().getListe().get(Joueur.getListeJoueur().get(0).getListeLettrePos().get(i)).val = lettre.val;
+									Joueur.getListeJoueur().get(0).getListeLettrePos().remove(i);
+									break;
+								}
+							}
+							/* puis on remet une nouvelle lettre dans le chevalet */
+							element = rand.nextInt(model.getListeLettreAlp().length);
+							view.lettre7.val = model.getListeLettreAlp()[element];
+							view.lettre7.image = new ImageIcon(this.getClass().getResource("/images/"+view.lettre7.val+".png"));
+							view.lettre7.setIcon(view.lettre4.image);
+							view.lettre7.posLettre=300;
+							view.lettre7.setHorizontalAlignment(SwingConstants.CENTER);
+							view.getLettres().add(view.lettre7);
+							view.getLettres().revalidate();
+						}
+					}else {
+						Joueur.getListeJoueur().get(0).isOnLine = false; 
+						Joueur.getListeJoueur().get(0).isOnCol = false;
+						Joueur.getListeJoueur().get(0).firstPos=-1;
+						if(view.lettre1.posLettre!=300) {
+							for(int i=0; i<Joueur.getListeJoueur().get(0).getListeLettrePos().size(); i++) {
+								if (Joueur.getListeJoueur().get(0).getListeLettrePos().get(i)==view.lettre1.posLettre) {
+									view.getGrille().getListe().get(Joueur.getListeJoueur().get(0).getListeLettrePos().get(i)).val = '#';
+									Joueur.getListeJoueur().get(0).getListeLettrePos().remove(i);
+									break;
+								}
+							}
+							view.lettre1.posLettre=300;
+							view.lettre1.setBounds(0,0,45,45);
+							view.lettre1.setHorizontalAlignment(SwingConstants.CENTER);
+							view.getLettres().add(view.lettre1);
+							view.getLettres().revalidate();
+						}
+						if(view.lettre2.posLettre!=300) {
+							for(int i=0; i<Joueur.getListeJoueur().get(0).getListeLettrePos().size(); i++) {
+								if (Joueur.getListeJoueur().get(0).getListeLettrePos().get(i)==view.lettre2.posLettre) {
+									view.getGrille().getListe().get(Joueur.getListeJoueur().get(0).getListeLettrePos().get(i)).val = '#';
+									Joueur.getListeJoueur().get(0).getListeLettrePos().remove(i);
+									break;
+								}
+							}
+							view.lettre2.posLettre=300;
+							view.lettre2.setBounds(0,0,45,45);
+							view.lettre2.setHorizontalAlignment(SwingConstants.CENTER);
+							view.getLettres().add(view.lettre2);
+							view.getLettres().revalidate();
+						}
+						if(view.lettre3.posLettre!=300) {
+							for(int i=0; i<Joueur.getListeJoueur().get(0).getListeLettrePos().size(); i++) {
+								if (Joueur.getListeJoueur().get(0).getListeLettrePos().get(i)==view.lettre3.posLettre) {
+									view.getGrille().getListe().get(Joueur.getListeJoueur().get(0).getListeLettrePos().get(i)).val = '#';
+									Joueur.getListeJoueur().get(0).getListeLettrePos().remove(i);
+									break;
+								}
+							}
+							view.lettre3.posLettre=300;
+							view.lettre3.setBounds(0,0,45,45);
+							view.lettre3.setHorizontalAlignment(SwingConstants.CENTER);
+							view.getLettres().add(view.lettre3);
+							view.getLettres().revalidate();
+						}
+						if(view.lettre4.posLettre!=300) {
+							for(int i=0; i<Joueur.getListeJoueur().get(0).getListeLettrePos().size(); i++) {
+								if (Joueur.getListeJoueur().get(0).getListeLettrePos().get(i)==view.lettre4.posLettre) {
+									view.getGrille().getListe().get(Joueur.getListeJoueur().get(0).getListeLettrePos().get(i)).val = '#';
+									Joueur.getListeJoueur().get(0).getListeLettrePos().remove(i);
+									break;
+								}
+							}
+							view.lettre4.posLettre=300;
+							view.lettre4.setBounds(0,0,45,45);
+							view.lettre4.setHorizontalAlignment(SwingConstants.CENTER);
+							view.getLettres().add(view.lettre4);
+							view.getLettres().revalidate();
+						}
+						if(view.lettre5.posLettre!=300) {
+							for(int i=0; i<Joueur.getListeJoueur().get(0).getListeLettrePos().size(); i++) {
+								if (Joueur.getListeJoueur().get(0).getListeLettrePos().get(i)==view.lettre5.posLettre) {
+									view.getGrille().getListe().get(Joueur.getListeJoueur().get(0).getListeLettrePos().get(i)).val = '#';
+									Joueur.getListeJoueur().get(0).getListeLettrePos().remove(i);
+									break;
+								}
+							}
+							view.lettre5.posLettre=300;
+							view.lettre5.setBounds(0,0,45,45);
+							view.lettre5.setHorizontalAlignment(SwingConstants.CENTER);
+							view.getLettres().add(view.lettre5);
+							view.getLettres().revalidate();
+						}
+						if(view.lettre6.posLettre!=300) {
+							for(int i=0; i<Joueur.getListeJoueur().get(0).getListeLettrePos().size(); i++) {
+								if (Joueur.getListeJoueur().get(0).getListeLettrePos().get(i)==view.lettre6.posLettre) {
+									view.getGrille().getListe().get(Joueur.getListeJoueur().get(0).getListeLettrePos().get(i)).val = '#';
+									Joueur.getListeJoueur().get(0).getListeLettrePos().remove(i);
+									break;
+								}
+							}
+							view.lettre6.posLettre=300;
+							view.lettre6.setBounds(0,0,45,45);
+							view.lettre6.setHorizontalAlignment(SwingConstants.CENTER);
+							view.getLettres().add(view.lettre6);
+							view.getLettres().revalidate();
+						}
+						if(view.lettre7.posLettre!=300) {
+							for(int i=0; i<Joueur.getListeJoueur().get(0).getListeLettrePos().size(); i++) {
+								if (Joueur.getListeJoueur().get(0).getListeLettrePos().get(i)==view.lettre7.posLettre) {
+									view.getGrille().getListe().get(Joueur.getListeJoueur().get(0).getListeLettrePos().get(i)).val = '#';
+									Joueur.getListeJoueur().get(0).getListeLettrePos().remove(i);
+									break;
+								}
+							}
+							view.lettre7.posLettre=300;
+							view.lettre7.setBounds(0,0,45,45);
+							view.lettre7.setHorizontalAlignment(SwingConstants.CENTER);
+							view.getLettres().add(view.lettre7);
 							view.getLettres().revalidate();
 						}
 					}
 				} catch (IOException ex) {
 					ex.printStackTrace();
 				}
+				view.getGrille().revalidate();
 				initTour();
 			}
 		});
@@ -198,15 +457,39 @@ public class JeuController {
 	public void placerLettre() {
 		/* placer une lettre */
 		view.lettre1.addMouseListener(new MouseAdapter(){
+			/* on place la lettre dans le tableau ou on la remets dans le chevalet */ 
 			public void mouseReleased(MouseEvent e){
-				JeuModel.setLettre((int)MouseInfo.getPointerInfo().getLocation().getX()-((width-1000)/2)-22,(int)MouseInfo.getPointerInfo().getLocation().getY()-((height-800)/2)-22, view.lettre1, view.getGrille(), view.getLettres());
+				JeuModel.setLettre((int)MouseInfo.getPointerInfo().getLocation().getX()-((width-1000)/2)-22,(int)MouseInfo.getPointerInfo().getLocation().getY()-((height-800)/2)-22, view.lettre1, view.getGrille(), view.getLettres(), Joueur.getListeJoueur().get(0));
 				view.getLettreMove().remove(view.lettre1);
 				view.getLettreMove().setBounds(2000,2000,45,45);
 
 			}
 		});
+		/* Drag and drop de la lettre */
 		view.lettre1.addMouseMotionListener(new MouseAdapter(){
 			public void mouseDragged(MouseEvent e){
+				/* si la case etait pose dans la grille, on l enleve puis on donne le droit de refaire la pose de lettre */
+				if(view.lettre1.posLettre!=300) {
+					for(int i=0; i<Joueur.getListeJoueur().get(0).getListeLettrePos().size(); i++) {
+						if (Joueur.getListeJoueur().get(0).getListeLettrePos().get(i)==view.lettre1.posLettre) {
+							if(Joueur.getListeJoueur().get(0).getListeLettrePos().size()<=2) {
+								Joueur.getListeJoueur().get(0).isOnLine = false; 
+								Joueur.getListeJoueur().get(0).isOnCol = false;
+							}
+							if(Joueur.getListeJoueur().get(0).getListeLettrePos().size()<=1) {
+								Joueur.getListeJoueur().get(0).firstPos=-1;
+							}
+							view.getGrille().getListe().get(Joueur.getListeJoueur().get(0).getListeLettrePos().get(i));
+							view.getGrille().getListe().get(Joueur.getListeJoueur().get(0).getListeLettrePos().get(i)).val = '#';
+							Joueur.getListeJoueur().get(0).getListeLettrePos().remove(i);
+							break;
+						}
+					}
+					view.lettre1.posLettre=300;
+					view.lettre1.setHorizontalAlignment(SwingConstants.CENTER);
+					view.getLettres().add(view.lettre1);
+					view.getLettres().revalidate();
+				}
 				view.lettre1.setBounds(0,0,45,45);
 				view.getLettreMove().add(view.lettre1,0);
 				view.getLettreMove().setBounds((int)MouseInfo.getPointerInfo().getLocation().getX()-((width-1000)/2)-22,(int)MouseInfo.getPointerInfo().getLocation().getY()-((height-800)/2)-22,45,45);
@@ -215,13 +498,35 @@ public class JeuController {
 		
 		view.lettre2.addMouseListener(new MouseAdapter(){
 			public void mouseReleased(MouseEvent e){
-				JeuModel.setLettre((int)MouseInfo.getPointerInfo().getLocation().getX()-((width-1000)/2)-22,(int)MouseInfo.getPointerInfo().getLocation().getY()-((height-800)/2)-22, view.lettre2, view.getGrille(), view.getLettres());
+				JeuModel.setLettre((int)MouseInfo.getPointerInfo().getLocation().getX()-((width-1000)/2)-22,(int)MouseInfo.getPointerInfo().getLocation().getY()-((height-800)/2)-22, view.lettre2, view.getGrille(), view.getLettres(), Joueur.getListeJoueur().get(0));
 				view.getLettreMove().remove(view.lettre2);
 				view.getLettreMove().setBounds(2000,2000,45,45);
 			}
 		});
 		view.lettre2.addMouseMotionListener(new MouseAdapter(){
 			public void mouseDragged(MouseEvent e){
+				/* si la case etait pose dans la grille, on l enleve puis on donne le droit de refaire la pose de lettre */
+				if(view.lettre2.posLettre!=300) {
+					for(int i=0; i<Joueur.getListeJoueur().get(0).getListeLettrePos().size(); i++) {
+						if (Joueur.getListeJoueur().get(0).getListeLettrePos().get(i)==view.lettre2.posLettre) {
+							if(Joueur.getListeJoueur().get(0).getListeLettrePos().size()<=2) {
+								Joueur.getListeJoueur().get(0).isOnLine = false; 
+								Joueur.getListeJoueur().get(0).isOnCol = false;
+							}
+							if(Joueur.getListeJoueur().get(0).getListeLettrePos().size()<=1) {
+								Joueur.getListeJoueur().get(0).firstPos=-1;
+							}
+							view.getGrille().getListe().get(Joueur.getListeJoueur().get(0).getListeLettrePos().get(i));
+							view.getGrille().getListe().get(Joueur.getListeJoueur().get(0).getListeLettrePos().get(i)).val = '#';
+							Joueur.getListeJoueur().get(0).getListeLettrePos().remove(i);
+							break;
+						}
+					}
+					view.lettre2.posLettre=300;
+					view.lettre2.setHorizontalAlignment(SwingConstants.CENTER);
+					view.getLettres().add(view.lettre2);
+					view.getLettres().revalidate();
+				}
 				view.lettre2.setBounds(0,0,45,45);
 				view.getLettreMove().add(view.lettre2,0);
 				view.getLettreMove().setBounds((int)MouseInfo.getPointerInfo().getLocation().getX()-((width-1000)/2)-22,(int)MouseInfo.getPointerInfo().getLocation().getY()-((height-800)/2)-22,45,45);
@@ -230,13 +535,35 @@ public class JeuController {
 		
 		view.lettre3.addMouseListener(new MouseAdapter(){
 			public void mouseReleased(MouseEvent e){
-				JeuModel.setLettre((int)MouseInfo.getPointerInfo().getLocation().getX()-((width-1000)/2)-22,(int)MouseInfo.getPointerInfo().getLocation().getY()-((height-800)/2)-22, view.lettre3, view.getGrille(), view.getLettres());
+				JeuModel.setLettre((int)MouseInfo.getPointerInfo().getLocation().getX()-((width-1000)/2)-22,(int)MouseInfo.getPointerInfo().getLocation().getY()-((height-800)/2)-22, view.lettre3, view.getGrille(), view.getLettres(), Joueur.getListeJoueur().get(0));
 				view.getLettreMove().remove(view.lettre3);
 				view.getLettreMove().setBounds(2000,2000,45,45);
 			}
 		});
 		view.lettre3.addMouseMotionListener(new MouseAdapter(){
 			public void mouseDragged(MouseEvent e){
+				/* si la case etait pose dans la grille, on l enleve puis on donne le droit de refaire la pose de lettre */
+				if(view.lettre3.posLettre!=300) {
+					for(int i=0; i<Joueur.getListeJoueur().get(0).getListeLettrePos().size(); i++) {
+						if (Joueur.getListeJoueur().get(0).getListeLettrePos().get(i)==view.lettre3.posLettre) {
+							if(Joueur.getListeJoueur().get(0).getListeLettrePos().size()<=2) {
+								Joueur.getListeJoueur().get(0).isOnLine = false; 
+								Joueur.getListeJoueur().get(0).isOnCol = false;
+							}
+							if(Joueur.getListeJoueur().get(0).getListeLettrePos().size()<=1) {
+								Joueur.getListeJoueur().get(0).firstPos=-1;
+							}
+							view.getGrille().getListe().get(Joueur.getListeJoueur().get(0).getListeLettrePos().get(i));
+							view.getGrille().getListe().get(Joueur.getListeJoueur().get(0).getListeLettrePos().get(i)).val = '#';
+							Joueur.getListeJoueur().get(0).getListeLettrePos().remove(i);
+							break;
+						}
+					}
+					view.lettre3.posLettre=300;
+					view.lettre3.setHorizontalAlignment(SwingConstants.CENTER);
+					view.getLettres().add(view.lettre3);
+					view.getLettres().revalidate();
+				}
 				view.lettre3.setBounds(0,0,45,45);
 				view.getLettreMove().add(view.lettre3,0);
 				view.getLettreMove().setBounds((int)MouseInfo.getPointerInfo().getLocation().getX()-((width-1000)/2)-22,(int)MouseInfo.getPointerInfo().getLocation().getY()-((height-800)/2)-22,45,45);
@@ -245,13 +572,35 @@ public class JeuController {
 		
 		view.lettre4.addMouseListener(new MouseAdapter(){
 			public void mouseReleased(MouseEvent e){
-				JeuModel.setLettre((int)MouseInfo.getPointerInfo().getLocation().getX()-((width-1000)/2)-22,(int)MouseInfo.getPointerInfo().getLocation().getY()-((height-800)/2)-22, view.lettre4, view.getGrille(), view.getLettres());
+				JeuModel.setLettre((int)MouseInfo.getPointerInfo().getLocation().getX()-((width-1000)/2)-22,(int)MouseInfo.getPointerInfo().getLocation().getY()-((height-800)/2)-22, view.lettre4, view.getGrille(), view.getLettres(), Joueur.getListeJoueur().get(0));
 				view.getLettreMove().remove(view.lettre4);
 				view.getLettreMove().setBounds(2000,2000,45,45);
 			}
 		});
 		view.lettre4.addMouseMotionListener(new MouseAdapter(){
 			public void mouseDragged(MouseEvent e){
+				/* si la case etait pose dans la grille, on l enleve puis on donne le droit de refaire la pose de lettre */
+				if(view.lettre4.posLettre!=300) {
+					for(int i=0; i<Joueur.getListeJoueur().get(0).getListeLettrePos().size(); i++) {
+						if (Joueur.getListeJoueur().get(0).getListeLettrePos().get(i)==view.lettre4.posLettre) {
+							if(Joueur.getListeJoueur().get(0).getListeLettrePos().size()<=2) {
+								Joueur.getListeJoueur().get(0).isOnLine = false; 
+								Joueur.getListeJoueur().get(0).isOnCol = false;
+							}
+							if(Joueur.getListeJoueur().get(0).getListeLettrePos().size()<=1) {
+								Joueur.getListeJoueur().get(0).firstPos=-1;
+							}
+							view.getGrille().getListe().get(Joueur.getListeJoueur().get(0).getListeLettrePos().get(i));
+							view.getGrille().getListe().get(Joueur.getListeJoueur().get(0).getListeLettrePos().get(i)).val = '#';
+							Joueur.getListeJoueur().get(0).getListeLettrePos().remove(i);
+							break;
+						}
+					}
+					view.lettre4.posLettre=300;
+					view.lettre4.setHorizontalAlignment(SwingConstants.CENTER);
+					view.getLettres().add(view.lettre4);
+					view.getLettres().revalidate();
+				}
 				view.lettre4.setBounds(0,0,45,45);
 				view.getLettreMove().add(view.lettre4,0);
 				view.getLettreMove().setBounds((int)MouseInfo.getPointerInfo().getLocation().getX()-((width-1000)/2)-22,(int)MouseInfo.getPointerInfo().getLocation().getY()-((height-800)/2)-22,45,45);
@@ -260,13 +609,35 @@ public class JeuController {
 		
 		view.lettre5.addMouseListener(new MouseAdapter(){
 			public void mouseReleased(MouseEvent e){
-				JeuModel.setLettre((int)MouseInfo.getPointerInfo().getLocation().getX()-((width-1000)/2)-22,(int)MouseInfo.getPointerInfo().getLocation().getY()-((height-800)/2)-22, view.lettre5, view.getGrille(), view.getLettres());
+				JeuModel.setLettre((int)MouseInfo.getPointerInfo().getLocation().getX()-((width-1000)/2)-22,(int)MouseInfo.getPointerInfo().getLocation().getY()-((height-800)/2)-22, view.lettre5, view.getGrille(), view.getLettres(), Joueur.getListeJoueur().get(0));
 				view.getLettreMove().remove(view.lettre5);
 				view.getLettreMove().setBounds(2000,2000,45,45);
 			}
 		});
 		view.lettre5.addMouseMotionListener(new MouseAdapter(){
 			public void mouseDragged(MouseEvent e){
+				/* si la case etait pose dans la grille, on l enleve puis on donne le droit de refaire la pose de lettre */
+				if(view.lettre5.posLettre!=300) {
+					for(int i=0; i<Joueur.getListeJoueur().get(0).getListeLettrePos().size(); i++) {
+						if (Joueur.getListeJoueur().get(0).getListeLettrePos().get(i)==view.lettre5.posLettre) {
+							if(Joueur.getListeJoueur().get(0).getListeLettrePos().size()<=2) {
+								Joueur.getListeJoueur().get(0).isOnLine = false; 
+								Joueur.getListeJoueur().get(0).isOnCol = false;
+							}
+							if(Joueur.getListeJoueur().get(0).getListeLettrePos().size()<=1) {
+								Joueur.getListeJoueur().get(0).firstPos=-1;
+							}
+							view.getGrille().getListe().get(Joueur.getListeJoueur().get(0).getListeLettrePos().get(i));
+							view.getGrille().getListe().get(Joueur.getListeJoueur().get(0).getListeLettrePos().get(i)).val = '#';
+							Joueur.getListeJoueur().get(0).getListeLettrePos().remove(i);
+							break;
+						}
+					}
+					view.lettre5.posLettre=300;
+					view.lettre5.setHorizontalAlignment(SwingConstants.CENTER);
+					view.getLettres().add(view.lettre5);
+					view.getLettres().revalidate();
+				}
 				view.lettre5.setBounds(0,0,45,45);
 				view.getLettreMove().add(view.lettre5,0);
 				view.getLettreMove().setBounds((int)MouseInfo.getPointerInfo().getLocation().getX()-((width-1000)/2)-22,(int)MouseInfo.getPointerInfo().getLocation().getY()-((height-800)/2)-22,45,45);
@@ -275,13 +646,35 @@ public class JeuController {
 		
 		view.lettre6.addMouseListener(new MouseAdapter(){
 			public void mouseReleased(MouseEvent e){
-				JeuModel.setLettre((int)MouseInfo.getPointerInfo().getLocation().getX()-((width-1000)/2)-22,(int)MouseInfo.getPointerInfo().getLocation().getY()-((height-800)/2)-22, view.lettre6, view.getGrille(), view.getLettres());
+				JeuModel.setLettre((int)MouseInfo.getPointerInfo().getLocation().getX()-((width-1000)/2)-22,(int)MouseInfo.getPointerInfo().getLocation().getY()-((height-800)/2)-22, view.lettre6, view.getGrille(), view.getLettres(), Joueur.getListeJoueur().get(0));
 				view.getLettreMove().remove(view.lettre6);
 				view.getLettreMove().setBounds(2000,2000,45,45);
 			}
 		});
 		view.lettre6.addMouseMotionListener(new MouseAdapter(){
 			public void mouseDragged(MouseEvent e){
+				/* si la case etait pose dans la grille, on l enleve puis on donne le droit de refaire la pose de lettre */
+				if(view.lettre6.posLettre!=300) {
+					for(int i=0; i<Joueur.getListeJoueur().get(0).getListeLettrePos().size(); i++) {
+						if (Joueur.getListeJoueur().get(0).getListeLettrePos().get(i)==view.lettre6.posLettre) {
+							if(Joueur.getListeJoueur().get(0).getListeLettrePos().size()<=2) {
+								Joueur.getListeJoueur().get(0).isOnLine = false; 
+								Joueur.getListeJoueur().get(0).isOnCol = false;
+							}
+							if(Joueur.getListeJoueur().get(0).getListeLettrePos().size()<=1) {
+								Joueur.getListeJoueur().get(0).firstPos=-1;
+							}
+							view.getGrille().getListe().get(Joueur.getListeJoueur().get(0).getListeLettrePos().get(i));
+							view.getGrille().getListe().get(Joueur.getListeJoueur().get(0).getListeLettrePos().get(i)).val = '#';
+							Joueur.getListeJoueur().get(0).getListeLettrePos().remove(i);
+							break;
+						}
+					}
+					view.lettre6.posLettre=300;
+					view.lettre6.setHorizontalAlignment(SwingConstants.CENTER);
+					view.getLettres().add(view.lettre6);
+					view.getLettres().revalidate();
+				}
 				view.lettre6.setBounds(0,0,45,45);
 				view.getLettreMove().add(view.lettre6,0);
 				view.getLettreMove().setBounds((int)MouseInfo.getPointerInfo().getLocation().getX()-((width-1000)/2)-22,(int)MouseInfo.getPointerInfo().getLocation().getY()-((height-800)/2)-22,45,45);
@@ -290,13 +683,35 @@ public class JeuController {
 		
 		view.lettre7.addMouseListener(new MouseAdapter(){
 			public void mouseReleased(MouseEvent e){
-				JeuModel.setLettre((int)MouseInfo.getPointerInfo().getLocation().getX()-((width-1000)/2)-22,(int)MouseInfo.getPointerInfo().getLocation().getY()-((height-800)/2)-22, view.lettre7, view.getGrille(), view.getLettres());
+				JeuModel.setLettre((int)MouseInfo.getPointerInfo().getLocation().getX()-((width-1000)/2)-22,(int)MouseInfo.getPointerInfo().getLocation().getY()-((height-800)/2)-22, view.lettre7, view.getGrille(), view.getLettres(), Joueur.getListeJoueur().get(0));
 				view.getLettreMove().remove(view.lettre7);
 				view.getLettreMove().setBounds(2000,2000,45,45);
 			}
 		});
 		view.lettre7.addMouseMotionListener(new MouseAdapter(){
 			public void mouseDragged(MouseEvent e){
+				/* si la case etait pose dans la grille, on l enleve puis on donne le droit de refaire la pose de lettre */
+				if(view.lettre7.posLettre!=300) {
+					for(int i=0; i<Joueur.getListeJoueur().get(0).getListeLettrePos().size(); i++) {
+						if (Joueur.getListeJoueur().get(0).getListeLettrePos().get(i)==view.lettre7.posLettre) {
+							if(Joueur.getListeJoueur().get(0).getListeLettrePos().size()<=2) {
+								Joueur.getListeJoueur().get(0).isOnLine = false; 
+								Joueur.getListeJoueur().get(0).isOnCol = false;
+							}
+							if(Joueur.getListeJoueur().get(0).getListeLettrePos().size()<=1) {
+								Joueur.getListeJoueur().get(0).firstPos=-1;
+							}
+							view.getGrille().getListe().get(Joueur.getListeJoueur().get(0).getListeLettrePos().get(i));
+							view.getGrille().getListe().get(Joueur.getListeJoueur().get(0).getListeLettrePos().get(i)).val = '#';
+							Joueur.getListeJoueur().get(0).getListeLettrePos().remove(i);
+							break;
+						}
+					}
+					view.lettre7.posLettre=300;
+					view.lettre7.setHorizontalAlignment(SwingConstants.CENTER);
+					view.getLettres().add(view.lettre7);
+					view.getLettres().revalidate();
+				}
 				view.lettre7.setBounds(0,0,45,45);
 				view.getLettreMove().add(view.lettre7,0);
 				view.getLettreMove().setBounds((int)MouseInfo.getPointerInfo().getLocation().getX()-((width-1000)/2)-22,(int)MouseInfo.getPointerInfo().getLocation().getY()-((height-800)/2)-22,45,45);
