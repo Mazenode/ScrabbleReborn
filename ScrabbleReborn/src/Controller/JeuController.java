@@ -141,25 +141,31 @@ public class JeuController {
 			}
 	
 			else if(joueurAyantJoue == 1) {
-				if(compteurJoueur == 2 || compteurJoueur == 3 || compteurJoueur == 4) {
+				if(compteurJoueur == 2) {
+					joueurActuel = joueurs.get(1);
+					view.getTourDuJoueur().setText(joueurs.get(1).getPseudo());
+					joueurAyantJoue = 0;
+				}
+				else if(compteurJoueur == 3 || compteurJoueur == 4) {
 					joueurActuel = joueurs.get(1);
 					view.getTourDuJoueur().setText(joueurs.get(1).getPseudo());
 					joueurAyantJoue ++;
 				}
-				else {
-					joueurAyantJoue = 0;
-				}
+				
 			}
 	
 			else if(joueurAyantJoue == 2) {
-				if(compteurJoueur == 3 || compteurJoueur == 4) {
+				if(compteurJoueur == 3) {
+					joueurActuel = joueurs.get(2);
+					view.getTourDuJoueur().setText(joueurs.get(2).getPseudo());
+					joueurAyantJoue= 0;
+				}
+				else if(compteurJoueur == 4) {
 					joueurActuel = joueurs.get(2);
 					view.getTourDuJoueur().setText(joueurs.get(2).getPseudo());
 					joueurAyantJoue ++;
 				}
-				else {
-					joueurAyantJoue = 0;
-				}
+
 			}
 	
 			else if(joueurAyantJoue == 3) {
@@ -168,7 +174,9 @@ public class JeuController {
 					view.getTourDuJoueur().setText(joueurs.get(3).getPseudo());
 					joueurAyantJoue = 0;
 				}
+
 			}
+			
 		}
 		else {
 			int gagnant = 0;
