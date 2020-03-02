@@ -1,6 +1,9 @@
 package Model;
 
 import javax.swing.*;
+
+import Controller.JeuController;
+
 import java.awt.*;
 import java.io.*;
 import java.util.ArrayList;
@@ -15,7 +18,7 @@ public class JeuModel {
 	public static int width = (int)screenSize.getWidth();
 	public static int height = (int)screenSize.getHeight();
 
-	private static int NombreDeLettreRestante = 102;
+	public static int NombreDeLettreRestante;
 	public char [] ListeLettreAlp;
 	public String [] ListeMotAverif;
 	public static boolean victoire;
@@ -35,6 +38,8 @@ public class JeuModel {
 	private ImageIcon img10Clicked = new ImageIcon(this.getClass().getResource("/images/10_clicked.png"));
 	private ImageIcon img11Clicked = new ImageIcon(this.getClass().getResource("/images/11_clicked.png"));
 	private ImageIcon img12Clicked = new ImageIcon(this.getClass().getResource("/images/12_clicked.png"));
+	
+	private static Joueur joueurActuel;
 	
 	public ImageIcon getSauvegarderActive() {
 		return imgSauvegarderActive;
@@ -87,6 +92,7 @@ public class JeuModel {
 	
 	/* on place la lettre */
 	public static void setLettre(int posX, int posY, LettreModel lettre, Grille grille, JPanel panel, Joueur joueur){
+		joueurActuel = joueur;
 		boolean canSet = false;
 		for (int i=0;i<15;i++) {
 			/* on cherche la premiere case de la grille par rapport a  l'axe x */
@@ -100,7 +106,7 @@ public class JeuModel {
 							grille.getListe().get(j+15*i).add(lettre);
 							grille.getListe().get(j+15*i).val = lettre.getVal();
 							grille.revalidate();
-							Joueur.getListeJoueur().get(0).getListeLettrePos().add(j+15*i);
+							joueurActuel.getListeLettrePos().add(j+15*i);
 							canSet=true;
 						}
 					}
@@ -122,8 +128,9 @@ public class JeuModel {
 
 
 	public static void setNbrDeLettreRestante(int compteur){
+		
 		NombreDeLettreRestante -= compteur;
-		if (NombreDeLettreRestante == 0){
+		if (NombreDeLettreRestante <= 0){
 			victoire = true;
 		}
 	}
@@ -147,17 +154,15 @@ public class JeuModel {
 			case 10 : return img10Clicked;
 			case 11 : return img11Clicked;
 			case 12 : return img12Clicked;
-
 		}
 		return null;
 	}
 
-	public boolean lecture(JeuView view) throws IOException {
+	public boolean lecture(JeuView view, Joueur joueur) throws IOException {
+		joueurActuel = joueur;
 		getToutLesMots(view);
-		System.out.println(Joueur.getListeJoueur().get(0).getScore());
-		System.out.println("liste des mots lue : " + getToutLesMots(view));
 		//int i = 0;
-		if (Joueur.getListeJoueur().get(0).getListeLettrePos().size() == 0){
+		if (joueurActuel.getListeLettrePos().size() == 0){
 			return false;
 		}
 		for (int i  = 0; i < getToutLesMots(view).size();i++){
@@ -168,18 +173,16 @@ public class JeuModel {
 					return false;
 				}
 				if (getToutLesMots(view).get(i).toUpperCase().equals(line)) {
+					////////////////////////////////WTF///////////////////////////////////////
 					Joueur.getListeJoueur().get(i).retrieveScoreActivePlayer(getToutLesMots(view));
 					break;
 				}
 				line = buffer.readLine();
 			}
 			if (line == null){
-				System.out.println("False");
 				return false;
 			}
 			if (i == getToutLesMots(view).size() - 1){
-				System.out.println("True");
-				System.out.println(Joueur.getListeJoueur().get(0).getScore());
 				return true;
 			}
 		}
@@ -239,7 +242,7 @@ public class JeuModel {
 
 	public ArrayList<String> getToutLesMots(JeuView view){
 		ArrayList<String> aRetourner = new ArrayList<String>();
-		if (Joueur.getListeJoueur().get(0).getListeLettrePos().size() == 0){
+		if (joueurActuel.getListeLettrePos().size() == 0){
 			changerLettre(view.lettre1,view);
 			changerLettre(view.lettre2,view);
 			changerLettre(view.lettre3,view);
@@ -250,14 +253,14 @@ public class JeuModel {
 			return null;
 		}
 
-		Joueur.getListeJoueur().get(0).getListeLettrePos().get(0);
+		joueurActuel.getListeLettrePos().get(0);
 
-		int posOri = Joueur.getListeJoueur().get(0).getListeLettrePos().get(0);
+		int posOri = joueurActuel.getListeLettrePos().get(0);
 		int debutDeLigne = (posOri / 15) * 15;
 		int debutDeCol =  (posOri - ((posOri / 15) * 15));
 
-		if (Joueur.getListeJoueur().get(0).getIsOnLine()){
-			aRetourner.add(getMotHorizontal(Joueur.getListeJoueur().get(0).getListeLettrePos().get(0)));
+		if (joueurActuel.getIsOnLine()){
+			aRetourner.add(getMotHorizontal(joueurActuel.getListeLettrePos().get(0)));
 
 			for(int i = posOri; i < debutDeLigne + 14; i++){
 				if(Grille.getListe().get(i+15).getVal() != '#' || Grille.getListe().get(i-15).getVal() != '#'){
@@ -265,8 +268,8 @@ public class JeuModel {
 				}
 			}
 		}
-		else if (Joueur.getListeJoueur().get(0).getIsOnCol()){
-			aRetourner.add(getMotVertical(Joueur.getListeJoueur().get(0).getListeLettrePos().get(0)));
+		else if (joueurActuel.getIsOnCol()){
+			aRetourner.add(getMotVertical(joueurActuel.getListeLettrePos().get(0)));
 			for(int i = posOri; i < 210 +  debutDeCol ; i+=15){
 				if(Grille.getListe().get(i+1).getVal() != '#' || Grille.getListe().get(i-1).getVal() != '#'){
 					aRetourner.add(getMotHorizontal(i));
@@ -274,8 +277,8 @@ public class JeuModel {
 			}
 		}
 		else {
-			aRetourner.add(getMotVertical(Joueur.getListeJoueur().get(0).getListeLettrePos().get(0)));
-			aRetourner.add(getMotHorizontal(Joueur.getListeJoueur().get(0).getListeLettrePos().get(0)));
+			aRetourner.add(getMotVertical(joueurActuel.getListeLettrePos().get(0)));
+			aRetourner.add(getMotHorizontal(joueurActuel.getListeLettrePos().get(0)));
 			if (aRetourner.get(1).length() == 1){
 				aRetourner.remove(1);
 			}

@@ -30,30 +30,30 @@ public class JeuController {
 	private ChargerPartieModel chargerPartie;
 	private JeuView view;
 	private JeuModel model;
-	private static int numPartie, compteur,element,joueurAyantJoue,compteurJoueur, numTour,lettreRestantes;
+	private static int numPartie, compteur,element,joueurAyantJoue,compteurJoueur, numTour,lettreRestantes, compteurTour;
 	private String[] listeResultats,listePseudo, data;
-	private static ArrayList<Joueur> joueurs;
+	public static ArrayList<Joueur> joueurs;
 	private Joueur joueurActuel;
 
 	public JeuController(JeuView view, JeuModel model, int numPartie) {
 		this.view = view;
 		this.model = model;
 		this.numPartie = numPartie;
+		chargerPartie = new ChargerPartieModel();
 		listeResultats = new String [9];
 		listePseudo = new String [4];
 		data = new String[14];
 		joueurAyantJoue = 0;
 		compteurJoueur = 0;
-		view.setVisible(true);
-
-		chargerPartie = new ChargerPartieModel();
-
+		numTour = ChargerPartieModel.numTour[numPartie -1];
+		
+		JeuModel.NombreDeLettreRestante = ChargerPartieModel.lettresRestantes[numPartie -1];
+		view.getLettresRestantes().setText(Integer.toString(JeuModel.NombreDeLettreRestante));
+		view.setVisible(true);		
+		
 		//Fonctions de chargement
 		chargerPlateau();
 		chargerScores();
-		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-		Joueur Mathieu = new Joueur("Mathieu",4);///////////////////////////////////Ã  supprimer////////////////////////////////////////////////////////
-		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		placerLettre();
 		fonctionsDiverses();
 		initTour();
@@ -68,7 +68,7 @@ public class JeuController {
 				indice = 2;
 			}
 			else {
-				indice = (numPartie  - 1) * 15;
+				indice = (numPartie  - 1) * 15 - 2;
 			}
 			int j = 0;
 
@@ -88,13 +88,12 @@ public class JeuController {
 		data[0] = "Partie "+ (numPartie - 1);
 		data[1] = ChargerPartieModel.dates[numPartie - 1];
 		data[2] = Integer.toString(numTour);
-		data[3] = Integer.toString(lettreRestantes);
+		data[3] = Integer.toString(JeuModel.NombreDeLettreRestante);
 		int j = 4;
 		int h = 5;
 		for(int i = 0; i < 4; i++) {
 			if(i < joueurs.size()) {
 				data[j] = joueurs.get(i).getPseudo();
-				System.out.println("test");
 			}
 			else {
 				data[j] = "null";
@@ -104,7 +103,7 @@ public class JeuController {
 
 		for(int i = 0; i < 4; i++) {
 			if(i < joueurs.size()) {
-				data[h] = Integer.toString(1);
+				data[h] = Integer.toString(joueurs.get(i).getScore());
 			}
 			else {
 				data[h] = Integer.toString(0);
@@ -131,11 +130,11 @@ public class JeuController {
 	}
 
 	public void initTour() {
-
+		
 		if(!model.victoire) {
 			if(joueurAyantJoue == 0) {
+				numTour+=1;
 				joueurActuel = joueurs.get(0);
-				System.out.println(joueurActuel.getPseudo());
 				view.getTourDuJoueur().setText(joueurs.get(0).getPseudo());
 				view.getImgJoueur().setIcon(model.getImgJoueur(1));
 				joueurAyantJoue++;
@@ -144,7 +143,6 @@ public class JeuController {
 			else if(joueurAyantJoue == 1) {
 				if(compteurJoueur == 2 || compteurJoueur == 3 || compteurJoueur == 4) {
 					joueurActuel = joueurs.get(1);
-					System.out.println(joueurActuel.getPseudo());
 					view.getTourDuJoueur().setText(joueurs.get(1).getPseudo());
 					joueurAyantJoue ++;
 				}
@@ -156,7 +154,6 @@ public class JeuController {
 			else if(joueurAyantJoue == 2) {
 				if(compteurJoueur == 3 || compteurJoueur == 4) {
 					joueurActuel = joueurs.get(2);
-					System.out.println(joueurActuel.getPseudo());
 					view.getTourDuJoueur().setText(joueurs.get(2).getPseudo());
 					joueurAyantJoue ++;
 				}
@@ -168,7 +165,6 @@ public class JeuController {
 			else if(joueurAyantJoue == 3) {
 				if(compteurJoueur == 4) {
 					joueurActuel = joueurs.get(3);
-					System.out.println(joueurActuel.getPseudo());
 					view.getTourDuJoueur().setText(joueurs.get(3).getPseudo());
 					joueurAyantJoue = 0;
 				}
@@ -176,7 +172,11 @@ public class JeuController {
 		}
 		else {
 			int gagnant = 0;
-			int[] resultats ={1,2,400,5};
+			int[] resultats = new int[joueurs.size()];
+			
+			for(int i = 0; i < resultats.length; i++) {	
+				resultats[i] = joueurs.get(i).getScore();
+			}
 			int [] copie = new int[resultats.length];
 			for(int i = 0; i < resultats.length; i++) {	
 				copie[i] = resultats[i];
@@ -208,6 +208,13 @@ public class JeuController {
 					view.getVictoire().setVisible(true);
 					break;
 			}
+		}
+		
+		try {
+			view.getImgJoueur().setIcon(model.getImgJoueur(Integer.parseInt(chargerPartie.getNumPhotoDuJoueur(joueurActuel))));;
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 
@@ -260,9 +267,17 @@ public class JeuController {
 
 			}
 			public void mousePressed(MouseEvent e){
-				sauvegarder();
-
-
+				
+				if(joueurActuel != joueurs.get(0)) {
+					JOptionPane.showMessageDialog(
+						    null, 
+						    "Tous les joueurs n'ont pas joue !", 
+						    "Sauvegarde impossible",
+						    JOptionPane.INFORMATION_MESSAGE);
+				}
+				else {
+					sauvegarder();
+				}
 			}
 		});
 
@@ -272,11 +287,6 @@ public class JeuController {
 
 			}
 			public void mousePressed(MouseEvent e){
-				/*MenuView view = new MenuView();
-
-				MenuModel model = new MenuModel();
-
-				MenuController controller = new MenuController(view, model);*/
 
 				CreerPartieView creerPartieView = new CreerPartieView();
 				CreerPartieModel creerPartieModel = new CreerPartieModel();
@@ -301,15 +311,15 @@ public class JeuController {
 			}
 			public void mousePressed(MouseEvent e){
 				try {
-					if(model.lecture(view)){
-						compteur = Joueur.getListeJoueur().get(0).getListeLettrePos().size();
+					if(model.lecture(view, joueurActuel)){
+						compteur = joueurActuel.getListeLettrePos().size();
 						Model.JeuModel.setNbrDeLettreRestante(compteur);
 						view.getLettresRestantes().setText(Integer.toString(JeuModel.getNbrDeLettreRestante()));
-
+						
 						/* On remet les variables a zero */
-						Joueur.getListeJoueur().get(0).isOnLine = false;
-						Joueur.getListeJoueur().get(0).isOnCol = false;
-						Joueur.getListeJoueur().get(0).firstPos=-1;
+						joueurActuel.isOnLine = false;
+						joueurActuel.isOnCol = false;
+						joueurActuel.firstPos=-1;
 
 						figeLettre(view.lettre1);
 						figeLettre(view.lettre2);
@@ -319,9 +329,9 @@ public class JeuController {
 						figeLettre(view.lettre6);
 						figeLettre(view.lettre7);
 					}else {
-						Joueur.getListeJoueur().get(0).isOnLine = false;
-						Joueur.getListeJoueur().get(0).isOnCol = false;
-						Joueur.getListeJoueur().get(0).firstPos=-1;
+						joueurActuel.isOnLine = false;
+						joueurActuel.isOnCol = false;
+						joueurActuel.firstPos=-1;
 						remettreLettre(view.lettre1);
 						remettreLettre(view.lettre2);
 						remettreLettre(view.lettre3);
@@ -330,11 +340,14 @@ public class JeuController {
 						remettreLettre(view.lettre6);
 						remettreLettre(view.lettre7);
 					}
+					
 				} catch (IOException ex) {
 					ex.printStackTrace();
 				}
+				
+				
 				view.getGrille().revalidate();
-				Joueur.getListeJoueur().get(0).getListeLettrePos().clear();
+				joueurActuel.getListeLettrePos().clear();
 				initTour();
 			}
 		});
@@ -346,7 +359,7 @@ public class JeuController {
 		view.lettre1.addMouseListener(new MouseAdapter(){
 			/* on place la lettre dans le tableau ou on la remets dans le chevalet */
 			public void mouseReleased(MouseEvent e){
-				JeuModel.setLettre((int)MouseInfo.getPointerInfo().getLocation().getX()-((width-1000)/2)-22,(int)MouseInfo.getPointerInfo().getLocation().getY()-((height-800)/2)-22, view.lettre1, view.getGrille(), view.getLettres(), Joueur.getListeJoueur().get(0));
+				JeuModel.setLettre((int)MouseInfo.getPointerInfo().getLocation().getX()-((width-1000)/2)-22,(int)MouseInfo.getPointerInfo().getLocation().getY()-((height-800)/2)-22, view.lettre1, view.getGrille(), view.getLettres(), joueurActuel);
 				view.getLettreMove().remove(view.lettre1);
 				view.getLettreMove().setBounds(2000,2000,45,45);
 
@@ -364,7 +377,7 @@ public class JeuController {
 
 		view.lettre2.addMouseListener(new MouseAdapter(){
 			public void mouseReleased(MouseEvent e){
-				JeuModel.setLettre((int)MouseInfo.getPointerInfo().getLocation().getX()-((width-1000)/2)-22,(int)MouseInfo.getPointerInfo().getLocation().getY()-((height-800)/2)-22, view.lettre2, view.getGrille(), view.getLettres(), Joueur.getListeJoueur().get(0));
+				JeuModel.setLettre((int)MouseInfo.getPointerInfo().getLocation().getX()-((width-1000)/2)-22,(int)MouseInfo.getPointerInfo().getLocation().getY()-((height-800)/2)-22, view.lettre2, view.getGrille(), view.getLettres(), joueurActuel);
 				view.getLettreMove().remove(view.lettre2);
 				view.getLettreMove().setBounds(2000,2000,45,45);
 			}
@@ -380,7 +393,7 @@ public class JeuController {
 
 		view.lettre3.addMouseListener(new MouseAdapter(){
 			public void mouseReleased(MouseEvent e){
-				JeuModel.setLettre((int)MouseInfo.getPointerInfo().getLocation().getX()-((width-1000)/2)-22,(int)MouseInfo.getPointerInfo().getLocation().getY()-((height-800)/2)-22, view.lettre3, view.getGrille(), view.getLettres(), Joueur.getListeJoueur().get(0));
+				JeuModel.setLettre((int)MouseInfo.getPointerInfo().getLocation().getX()-((width-1000)/2)-22,(int)MouseInfo.getPointerInfo().getLocation().getY()-((height-800)/2)-22, view.lettre3, view.getGrille(), view.getLettres(), joueurActuel);
 				view.getLettreMove().remove(view.lettre3);
 				view.getLettreMove().setBounds(2000,2000,45,45);
 			}
@@ -396,7 +409,7 @@ public class JeuController {
 
 		view.lettre4.addMouseListener(new MouseAdapter(){
 			public void mouseReleased(MouseEvent e){
-				JeuModel.setLettre((int)MouseInfo.getPointerInfo().getLocation().getX()-((width-1000)/2)-22,(int)MouseInfo.getPointerInfo().getLocation().getY()-((height-800)/2)-22, view.lettre4, view.getGrille(), view.getLettres(), Joueur.getListeJoueur().get(0));
+				JeuModel.setLettre((int)MouseInfo.getPointerInfo().getLocation().getX()-((width-1000)/2)-22,(int)MouseInfo.getPointerInfo().getLocation().getY()-((height-800)/2)-22, view.lettre4, view.getGrille(), view.getLettres(), joueurActuel);
 				view.getLettreMove().remove(view.lettre4);
 				view.getLettreMove().setBounds(2000,2000,45,45);
 			}
@@ -412,7 +425,7 @@ public class JeuController {
 
 		view.lettre5.addMouseListener(new MouseAdapter(){
 			public void mouseReleased(MouseEvent e){
-				JeuModel.setLettre((int)MouseInfo.getPointerInfo().getLocation().getX()-((width-1000)/2)-22,(int)MouseInfo.getPointerInfo().getLocation().getY()-((height-800)/2)-22, view.lettre5, view.getGrille(), view.getLettres(), Joueur.getListeJoueur().get(0));
+				JeuModel.setLettre((int)MouseInfo.getPointerInfo().getLocation().getX()-((width-1000)/2)-22,(int)MouseInfo.getPointerInfo().getLocation().getY()-((height-800)/2)-22, view.lettre5, view.getGrille(), view.getLettres(), joueurActuel);
 				view.getLettreMove().remove(view.lettre5);
 				view.getLettreMove().setBounds(2000,2000,45,45);
 			}
@@ -428,7 +441,7 @@ public class JeuController {
 
 		view.lettre6.addMouseListener(new MouseAdapter(){
 			public void mouseReleased(MouseEvent e){
-				JeuModel.setLettre((int)MouseInfo.getPointerInfo().getLocation().getX()-((width-1000)/2)-22,(int)MouseInfo.getPointerInfo().getLocation().getY()-((height-800)/2)-22, view.lettre6, view.getGrille(), view.getLettres(), Joueur.getListeJoueur().get(0));
+				JeuModel.setLettre((int)MouseInfo.getPointerInfo().getLocation().getX()-((width-1000)/2)-22,(int)MouseInfo.getPointerInfo().getLocation().getY()-((height-800)/2)-22, view.lettre6, view.getGrille(), view.getLettres(), joueurActuel);
 				view.getLettreMove().remove(view.lettre6);
 				view.getLettreMove().setBounds(2000,2000,45,45);
 			}
@@ -444,7 +457,7 @@ public class JeuController {
 
 		view.lettre7.addMouseListener(new MouseAdapter(){
 			public void mouseReleased(MouseEvent e){
-				JeuModel.setLettre((int)MouseInfo.getPointerInfo().getLocation().getX()-((width-1000)/2)-22,(int)MouseInfo.getPointerInfo().getLocation().getY()-((height-800)/2)-22, view.lettre7, view.getGrille(), view.getLettres(), Joueur.getListeJoueur().get(0));
+				JeuModel.setLettre((int)MouseInfo.getPointerInfo().getLocation().getX()-((width-1000)/2)-22,(int)MouseInfo.getPointerInfo().getLocation().getY()-((height-800)/2)-22, view.lettre7, view.getGrille(), view.getLettres(), joueurActuel);
 				view.getLettreMove().remove(view.lettre7);
 				view.getLettreMove().setBounds(2000,2000,45,45);
 			}
@@ -467,12 +480,12 @@ public class JeuController {
 		/* Pour chaque lettre, si elle a ete pose, on recupere la pos ou elle a ete pos et on fige l'image */
 		Random rand = new Random();
 		if(Oldlettre.posLettre!=300) {
-			for(int i=0; i<Joueur.getListeJoueur().get(0).getListeLettrePos().size(); i++) {
-				if (Joueur.getListeJoueur().get(0).getListeLettrePos().get(i)==Oldlettre.posLettre) {
+			for(int i=0; i<joueurActuel.getListeLettrePos().size(); i++) {
+				if (joueurActuel.getListeLettrePos().get(i)==Oldlettre.posLettre) {
 					LettreModel lettre = new LettreModel(Oldlettre.val);
-					view.getGrille().getListe().get(Joueur.getListeJoueur().get(0).getListeLettrePos().get(i)).add(lettre,0);
-					view.getGrille().getListe().get(Joueur.getListeJoueur().get(0).getListeLettrePos().get(i)).val = lettre.val;
-					Joueur.getListeJoueur().get(0).getListeLettrePos().remove(i);
+					view.getGrille().getListe().get(joueurActuel.getListeLettrePos().get(i)).add(lettre,0);
+					view.getGrille().getListe().get(joueurActuel.getListeLettrePos().get(i)).val = lettre.val;
+					joueurActuel.getListeLettrePos().remove(i);
 					break;
 				}
 			}
@@ -490,10 +503,10 @@ public class JeuController {
 
 	public void remettreLettre(LettreModel Oldlettre) {
 		if(Oldlettre.posLettre!=300) {
-			for(int i=0; i<Joueur.getListeJoueur().get(0).getListeLettrePos().size(); i++) {
-				if (Joueur.getListeJoueur().get(0).getListeLettrePos().get(i)==Oldlettre.posLettre) {
-					view.getGrille().getListe().get(Joueur.getListeJoueur().get(0).getListeLettrePos().get(i)).val = '#';
-					Joueur.getListeJoueur().get(0).getListeLettrePos().remove(i);
+			for(int i=0; i<joueurActuel.getListeLettrePos().size(); i++) {
+				if (joueurActuel.getListeLettrePos().get(i)==Oldlettre.posLettre) {
+					view.getGrille().getListe().get(joueurActuel.getListeLettrePos().get(i)).val = '#';
+					joueurActuel.getListeLettrePos().remove(i);
 					break;
 				}
 			}
@@ -508,18 +521,18 @@ public class JeuController {
 	public void enleverLettre(LettreModel OldLettre) {
 		/* si la case etait pose dans la grille, on l enleve puis on donne le droit de refaire la pose de lettre */
 		if(OldLettre.posLettre!=300) {
-			for(int i=0; i<Joueur.getListeJoueur().get(0).getListeLettrePos().size(); i++) {
-				if (Joueur.getListeJoueur().get(0).getListeLettrePos().get(i)==OldLettre.posLettre) {
-					if(Joueur.getListeJoueur().get(0).getListeLettrePos().size()<=2) {
-						Joueur.getListeJoueur().get(0).isOnLine = false;
-						Joueur.getListeJoueur().get(0).isOnCol = false;
+			for(int i=0; i<joueurActuel.getListeLettrePos().size(); i++) {
+				if (joueurActuel.getListeLettrePos().get(i)==OldLettre.posLettre) {
+					if(joueurActuel.getListeLettrePos().size()<=2) {
+						joueurActuel.isOnLine = false;
+						joueurActuel.isOnCol = false;
 					}
-					if(Joueur.getListeJoueur().get(0).getListeLettrePos().size()<=1) {
-						Joueur.getListeJoueur().get(0).firstPos=-1;
+					if(joueurActuel.getListeLettrePos().size()<=1) {
+						joueurActuel.firstPos=-1;
 					}
-					view.getGrille().getListe().get(Joueur.getListeJoueur().get(0).getListeLettrePos().get(i));
-					view.getGrille().getListe().get(Joueur.getListeJoueur().get(0).getListeLettrePos().get(i)).val = '#';
-					Joueur.getListeJoueur().get(0).getListeLettrePos().remove(i);
+					view.getGrille().getListe().get(joueurActuel.getListeLettrePos().get(i));
+					view.getGrille().getListe().get(joueurActuel.getListeLettrePos().get(i)).val = '#';
+					joueurActuel.getListeLettrePos().remove(i);
 					break;
 				}
 			}

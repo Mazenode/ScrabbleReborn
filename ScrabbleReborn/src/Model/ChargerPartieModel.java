@@ -3,6 +3,12 @@ package Model;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Iterator;
+import java.util.List;
 
 import javax.swing.ImageIcon;
 
@@ -13,7 +19,7 @@ public class ChargerPartieModel {
 	private ImageIcon imgLancerPartieActive = new ImageIcon(this.getClass().getResource("/images/bouton_lancer_partie_active.png"));
 	public static String[] listejoueurs, infosParties, listeResultats, plateau, dates;
 	public static int length;
-	public static int[] scores;
+	public static int[] scores, lettresRestantes, numTour;
 	
 	public ChargerPartieModel() {
 		listeResultats = new String[80];
@@ -47,6 +53,8 @@ public class ChargerPartieModel {
 	    setListeScores();
 	    setBoard();
 	    setDate();
+	    setNbLettresRestantes();
+	    setNumTours();
 	    buffer.close();
 	}
 	
@@ -129,6 +137,38 @@ public class ChargerPartieModel {
 					compteur = 0;
 				}		
 			}
+	}
+	
+	public void setNbLettresRestantes() {
+		lettresRestantes = new int[getNbParties()];
+		int j = 3;
+		for(int i = 0; i < getNbParties(); i++) {
+			lettresRestantes[i] = Integer.parseInt(infosParties[j]);
+			j+= 4;
+		}
+	}
+	
+	public String getNumPhotoDuJoueur(Joueur joueur) throws IOException {
+		   Path path = Paths.get("profils.txt");
+		   List<String> lines = Files.readAllLines(path, StandardCharsets.UTF_8);
+		   Iterator<String> it = lines.iterator();
+		  
+		   while(it.hasNext()) {
+			   if(it.next().toString().equals(joueur.getPseudo())) {
+				   return it.next().toString();
+			   }
+		   }
+		 
+		   return "null";
+	}
+	
+	public void setNumTours() {
+		numTour = new int[getNbParties()];
+		int j = 2;
+		for(int i = 0; i < getNbParties(); i++) {
+			numTour[i] = Integer.parseInt(infosParties[j]);
+			j+= 4;
+		}
 	}
 	
 	public int getNbParties() {

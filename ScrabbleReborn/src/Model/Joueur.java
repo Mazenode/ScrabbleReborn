@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public class Joueur {
 	private String name;
-	private int numPhoto,score,Multi;
+	private int numPhoto,score, Multi;
 	private ArrayList<Integer> listeLettrePos = new ArrayList<Integer>();
 	private static ArrayList<Joueur> listeJoueur = new ArrayList<Joueur>();
 	public boolean isOnLine = false, isOnCol = false;
