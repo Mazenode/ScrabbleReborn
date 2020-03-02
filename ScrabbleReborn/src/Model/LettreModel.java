@@ -28,6 +28,7 @@ public class LettreModel extends JButton {
 			this.setVisible(false);
 		}
 	}
+
 	
 	public ImageIcon getImage(){
 		return image;
@@ -41,7 +42,7 @@ public class LettreModel extends JButton {
 		return val;
 	}
 
-	public int getScoreLettre(char i) {
+	public static int getScoreLettre(char i) {
         switch(i) {
             case 'a':
                 return 1;

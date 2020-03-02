@@ -309,7 +309,7 @@ public class CreerPartieController {
 			try {
 				if(plein) {
 					pw.println();
-					pw.println("Partie 0");
+					pw.println("Partie 1");
 				}
 				else {
 					pw.println("Partie " + getNumPartie());

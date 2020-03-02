@@ -4,8 +4,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Random;
+import java.util.zip.ZipEntry;
 
 import Model.Grille;
+import View.JeuView;
 
 public class JeuModel {
 	public static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -15,6 +18,7 @@ public class JeuModel {
 	private static int NombreDeLettreRestante = 102;
 	public char [] ListeLettreAlp;
 	public String [] ListeMotAverif;
+	public static boolean victoire;
 
 	private ImageIcon imgSauvegarderActive = new ImageIcon(this.getClass().getResource("/images/sauvegarder_active.png"));
 	private ImageIcon imgSoumettreActive = new ImageIcon(this.getClass().getResource("/images/soumettre_mot_active.png"));
@@ -41,7 +45,8 @@ public class JeuModel {
 	}
 	
 	public JeuModel(){
-		ListeLettreAlp = new char[]{'a','b','c','d','e','f','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','x','y','z'};
+		ListeLettreAlp = new char[]{'a','a','a','a','a','a','a','b','b','c','d','d','e','e','e','e','e','e','e','e','e','e','e','e','f','g','g','h','h','i','i','i','i','i','k','l','l','m','m','n','n','n','n','n','o','o','o','o','o','p','p','r','r','r','r','r','s','s','s','s','t','t','t','t','u','u','u','u','u','v','x','z','c','h','i','a','s','s','e'};
+		victoire = false;
 	}
 
 	/* on verifie que la case est vide (pas d'autre lettre deja pose dedans) */
@@ -54,13 +59,12 @@ public class JeuModel {
 	}
 
 	/* on verifie que les cases sont sur la meme ligne/colonne */
-	public static boolean canSet(int i, int j, Grille grille, Joueur joueur) {
+	public static boolean canSet(int i, int j, Joueur joueur) {
 		boolean surBonneLigneCol = false;
 		/* si on a deja pose 2 lettres (ou plus), on verifie que la lettre qu on veut placer est sur la meme ligne/colonne */
 		if(joueur.getListeLettrePos().size()>=2) {
 			if((joueur.isOnCol == true && joueur.firstPos % 15 == j)||(joueur.isOnLine && ((int) (joueur.firstPos/15)) == i)) {
 				surBonneLigneCol = true;
-				System.out.println("ok l/c");
 			}
 		}
 		/* si on a deja pose 1 lettres, on verifie que la lettre qu on veut placer est sur la meme ligne ou la meme colonne */
@@ -68,18 +72,15 @@ public class JeuModel {
 			if(joueur.firstPos % 15 == j) {
 				joueur.isOnCol = true;
 				surBonneLigneCol = true;
-				System.out.println("ok c");
 			}else if(((int) (joueur.firstPos/15)) == i) {
 				joueur.isOnLine = true;
 				surBonneLigneCol = true;
-				System.out.println("ok l");
 			}
 		}
 		/* si on a pose 0 lettres, on garde en memoire la pos de la lettre pour pouvoir verifier la pos des futures lettres */
 		if(joueur.getListeLettrePos().size()==0) {
 			joueur.firstPos = i*15+j;
 			surBonneLigneCol = true;
-			System.out.println("ok 1");
 		}
 		return surBonneLigneCol;
 	}
@@ -94,7 +95,7 @@ public class JeuModel {
 					/* on cherche la premiere case de la grille par rapport a  l'axe y */
 					if (posX>j*47-22+278 && posX<(j+1)*47-22+278) {
 						/* si la lettre peut etre place */
-						if(caseDispo(i, j, grille) && canSet(i, j, grille, joueur)) {
+						if(caseDispo(i, j, grille) && canSet(i, j, joueur)) {
 							lettre.posLettre=j+15*i;
 							grille.getListe().get(j+15*i).add(lettre);
 							grille.getListe().get(j+15*i).val = lettre.getVal();
@@ -123,7 +124,7 @@ public class JeuModel {
 	public static void setNbrDeLettreRestante(int compteur){
 		NombreDeLettreRestante -= compteur;
 		if (NombreDeLettreRestante == 0){
-			System.out.println("LA PARTIE EST FINIE");
+			victoire = true;
 		}
 	}
 
@@ -151,29 +152,40 @@ public class JeuModel {
 		return null;
 	}
 
-	public boolean lecture() throws IOException {
-		//getMotHorizontal(169);
-		
-		System.out.println(getMotHorizontal(5));
-		
-		//getToutLesMots();
-		String lettrePose = "";
-		for (int i = 0; i < Joueur.getListeJoueur().get(0).getListeLettrePos().size(); i++) {
-			char e = Grille.getListe().get(Joueur.getListeJoueur().get(0).getListeLettrePos().get(i)).getVal();
-			lettrePose +=  e;
+	public boolean lecture(JeuView view) throws IOException {
+		getToutLesMots(view);
+		System.out.println(Joueur.getListeJoueur().get(0).getScore());
+		System.out.println("liste des mots lue : " + getToutLesMots(view));
+		//int i = 0;
+		if (Joueur.getListeJoueur().get(0).getListeLettrePos().size() == 0){
+			return false;
 		}
-		lettrePose = lettrePose.toUpperCase();
-		System.out.println(lettrePose);
-		BufferedReader buffer = new BufferedReader(new InputStreamReader (new FileInputStream((new File("Dictionnaire/D.txt")))));
-		String line = buffer.readLine();
-		while (!(line == null)) {
-			if (lettrePose.equals(line)) {
+		for (int i  = 0; i < getToutLesMots(view).size();i++){
+			BufferedReader buffer = new BufferedReader(new InputStreamReader (new FileInputStream((new File("Dictionnaire/"+ getToutLesMots(view).get(i).toUpperCase().charAt(0) +".txt")))));
+			String line = buffer.readLine();
+			while (!(line == null) ) {
+				if (getToutLesMots(view).size() == 0){
+					return false;
+				}
+				if (getToutLesMots(view).get(i).toUpperCase().equals(line)) {
+					Joueur.getListeJoueur().get(i).retrieveScoreActivePlayer(getToutLesMots(view));
+					break;
+				}
+				line = buffer.readLine();
+			}
+			if (line == null){
+				System.out.println("False");
+				return false;
+			}
+			if (i == getToutLesMots(view).size() - 1){
+				System.out.println("True");
+				System.out.println(Joueur.getListeJoueur().get(0).getScore());
 				return true;
 			}
-			line = buffer.readLine();
 		}
 		return false;
 	}
+
 
 
 	 static public String getMotHorizontal(int posLettre){
@@ -225,22 +237,71 @@ public class JeuModel {
 		return motAretourne;
 	}
 
-	static public ArrayList<String> getToutLesMots(){
+	public ArrayList<String> getToutLesMots(JeuView view){
 		ArrayList<String> aRetourner = new ArrayList<String>();
+		if (Joueur.getListeJoueur().get(0).getListeLettrePos().size() == 0){
+			changerLettre(view.lettre1,view);
+			changerLettre(view.lettre2,view);
+			changerLettre(view.lettre3,view);
+			changerLettre(view.lettre4,view);
+			changerLettre(view.lettre5,view);
+			changerLettre(view.lettre6,view);
+			changerLettre(view.lettre7,view);
+			return null;
+		}
+
 		Joueur.getListeJoueur().get(0).getListeLettrePos().get(0);
+
+		int posOri = Joueur.getListeJoueur().get(0).getListeLettrePos().get(0);
+		int debutDeLigne = (posOri / 15) * 15;
+		int debutDeCol =  (posOri - ((posOri / 15) * 15));
 
 		if (Joueur.getListeJoueur().get(0).getIsOnLine()){
 			aRetourner.add(getMotHorizontal(Joueur.getListeJoueur().get(0).getListeLettrePos().get(0)));
-		}
-		if (Joueur.getListeJoueur().get(0).getIsOnCol()){
-			aRetourner.add(getMotVertical(Joueur.getListeJoueur().get(0).getListeLettrePos().get(0)));
 
+			for(int i = posOri; i < debutDeLigne + 14; i++){
+				if(Grille.getListe().get(i+15).getVal() != '#' || Grille.getListe().get(i-15).getVal() != '#'){
+					aRetourner.add(getMotVertical(i));
+				}
+			}
 		}
-		for (String s : aRetourner){
-			System.out.println("mot lu : "+s);
+		else if (Joueur.getListeJoueur().get(0).getIsOnCol()){
+			aRetourner.add(getMotVertical(Joueur.getListeJoueur().get(0).getListeLettrePos().get(0)));
+			for(int i = posOri; i < 210 +  debutDeCol ; i+=15){
+				if(Grille.getListe().get(i+1).getVal() != '#' || Grille.getListe().get(i-1).getVal() != '#'){
+					aRetourner.add(getMotHorizontal(i));
+				}
+			}
+		}
+		else {
+			aRetourner.add(getMotVertical(Joueur.getListeJoueur().get(0).getListeLettrePos().get(0)));
+			aRetourner.add(getMotHorizontal(Joueur.getListeJoueur().get(0).getListeLettrePos().get(0)));
+			if (aRetourner.get(1).length() == 1){
+				aRetourner.remove(1);
+			}
+			if (aRetourner.get(0).length() == 1){
+				aRetourner.remove(0);
+			}
+
 		}
 		return aRetourner;
 	}
+
+
+	public void changerLettre(LettreModel Oldlettre, JeuView view){
+		Random rand = new Random();
+		int element = rand.nextInt(this.getListeLettreAlp().length);
+		Oldlettre.val = this.getListeLettreAlp()[element];
+		Oldlettre.image = new ImageIcon(this.getClass().getResource("/images/"+Oldlettre.val+".png"));
+		Oldlettre.setIcon(Oldlettre.image);
+		Oldlettre.posLettre=300;
+		Oldlettre.setHorizontalAlignment(SwingConstants.CENTER);
+		view.getLettres().add(Oldlettre);
+		view.getLettres().revalidate();
+	}
+
+
+
 
 
 }

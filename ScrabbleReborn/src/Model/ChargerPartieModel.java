@@ -41,7 +41,7 @@ public class ChargerPartieModel {
 	        listeResultats[length] = line;
 	        
 	    }
-	    
+
 	    setTabInfosParties();
 	    setListeJoueur();
 	    setListeScores();
@@ -63,7 +63,6 @@ public class ChargerPartieModel {
 	}
 	
 	public void setListeJoueur() {
-		
 		listejoueurs = new String[getNbParties() * 4];
 	    int compteur = 0;
 	    int j = 6;
@@ -86,12 +85,13 @@ public class ChargerPartieModel {
 		dates = new String[getNbParties()];
 		int j = 3;
 		for(int i = 0; i < getNbParties(); i ++) {
-			
+
 			dates[i] = listeResultats[j];
 			j+=13;
 
 		}
 	}
+
 	
 	public void setListeScores() {
 		scores = new int[getNbParties() * 4];
