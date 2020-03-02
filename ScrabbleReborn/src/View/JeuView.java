@@ -252,7 +252,9 @@ public class JeuView extends JFrame {
         soumettreCollisions.setBounds(19, 726, 276, 64);
         getContentPane().add(soumettreCollisions);
         
+        
         grille = new Grille();
+        grille.setNumPartie(1);
         grille.setBounds(278,11, 700, 710);
         getContentPane().add(grille);
         

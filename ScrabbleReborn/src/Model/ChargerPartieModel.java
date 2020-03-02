@@ -11,7 +11,7 @@ public class ChargerPartieModel {
 	private ImageIcon imgFondClicked = new ImageIcon(this.getClass().getResource("/images/fond_charger_partie_clicked.png"));
 	private ImageIcon imgLancerPartie = new ImageIcon(this.getClass().getResource("/images/bouton_lancer_partie.png"));
 	private ImageIcon imgLancerPartieActive = new ImageIcon(this.getClass().getResource("/images/bouton_lancer_partie_active.png"));
-	public static String[] listejoueurs, infosParties, listeResultats, plateau;
+	public static String[] listejoueurs, infosParties, listeResultats, plateau, dates;
 	public static int length;
 	public static int[] scores;
 	
@@ -41,11 +41,13 @@ public class ChargerPartieModel {
 	        listeResultats[length] = line;
 	        
 	    }
-
+	    
 	    setTabInfosParties();
 	    setListeJoueur();
 	    setListeScores();
 	    setBoard();
+	    setDate();
+	    buffer.close();
 	}
 	
 	public void setBoard() {
@@ -61,6 +63,7 @@ public class ChargerPartieModel {
 	}
 	
 	public void setListeJoueur() {
+		
 		listejoueurs = new String[getNbParties() * 4];
 	    int compteur = 0;
 	    int j = 6;
@@ -76,6 +79,17 @@ public class ChargerPartieModel {
 				j += 5;
 				compteur = 0;
 			}		
+		}
+	}
+	
+	public void setDate() {
+		dates = new String[getNbParties()];
+		int j = 3;
+		for(int i = 0; i < getNbParties(); i ++) {
+			
+			dates[i] = listeResultats[j];
+			j+=13;
+
 		}
 	}
 	

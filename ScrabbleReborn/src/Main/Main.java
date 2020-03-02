@@ -18,8 +18,8 @@ import View.MenuView;
 public class Main {
 
 	public static void main(String[] args) throws Exception {
-		
-		/*MenuView view = new MenuView();
+		/*
+		MenuView view = new MenuView();
 		
 		MenuModel model = new MenuModel();
 		
@@ -27,7 +27,7 @@ public class Main {
 		
 		JeuView jeuView = new JeuView();
 		JeuModel jeuModel = new JeuModel();
-		JeuController jeuController = new JeuController(jeuView, jeuModel,1);
+		JeuController jeuController = new JeuController(jeuView, jeuModel,2);
 		
 		
 		/*ChargerPartieView view = new ChargerPartieView();

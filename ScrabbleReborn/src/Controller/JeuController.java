@@ -5,8 +5,18 @@ import java.awt.MouseInfo;
 import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import Model.*;
@@ -24,36 +34,104 @@ public class JeuController {
 	private ChargerPartieModel chargerPartie;
 	private JeuView view;
 	private JeuModel model;
-	private static int numPartie, compteur,element,joueurAyantJoue,compteurJoueur;
-	private String[] listeResultats,listePseudo;
+	private static int numPartie, compteur,element,joueurAyantJoue,compteurJoueur, numTour,lettreRestantes;
+	private String[] listeResultats;
 	private static ArrayList<Joueur> joueurs;
+	private String [] data;
+	private Joueur joueurActuel;
 	
 	public JeuController(JeuView view, JeuModel model, int numPartie) {
 		this.view = view;
 		this.model = model;
 		this.numPartie = numPartie;
 		listeResultats = new String [9];
-		listePseudo = new String [4];
+		data = new String[14];
 		joueurAyantJoue = 0;
 		compteurJoueur = 0;
+		lettreRestantes = 999;
 		view.setVisible(true);
-		
 		chargerPartie = new ChargerPartieModel();
 
 		//Fonctions de chargement
 		chargerPlateau();
 		chargerScores();
+		//chargerNumTour();
+		//setData();
 		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		Joueur Mathieu = new Joueur("Mathieu",4);///////////////////////////////////à supprimer////////////////////////////////////////////////////////
 		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		placerLettre();
 		fonctionsDiverses();
 		initTour();
+		System.out.println(joueurs.get(0).getPseudo());
+	}
+	
+
+	public void sauvegarder()  {
+		setData();
+		try {
+			int indice = 0;
+			if(numPartie == 1) {
+				indice = 1;
+			}
+			else {
+				indice = (numPartie  - 1) * 15;
+			}
+			int j = 0;
+			
+			for(int i = indice; i < indice + 13; i++) {
+				 setVariable(i , data[j]);
+				 j++;
+			 }
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void setData() {
 		
+		data[0] = "Partie "+ (numPartie - 1);
+		data[1] = ChargerPartieModel.dates[numPartie - 1];
+		data[2] = Integer.toString(numTour);
+		data[3] = Integer.toString(lettreRestantes);
+		int j = 4;
+		int h = 5;
+		for(int i = 0; i < 4; i++) {
+			if(i < joueurs.size()) {
+				data[j] = joueurs.get(i).getPseudo();
+				System.out.println("test");
+			}
+			else {
+				data[j] = "null";
+			}
+			j+=2;
+		}
+		
+		for(int i = 0; i < 4; i++) {
+			if(i < joueurs.size()) {
+				data[h] = Integer.toString(1);
+			}
+			else {
+				data[h] = Integer.toString(0);
+			}
+			h+=2;
+		}
+		
+		data[12] = "test";
+	}
+	
+	public static void setVariable(int nombreLignes, String data) throws IOException {
+	    Path path = Paths.get("parties.txt");
+	    List<String> lines = Files.readAllLines(path, StandardCharsets.UTF_8);
+	    lines.set(nombreLignes - 1, data);
+	    Files.write(path, lines, StandardCharsets.UTF_8);
 	}
 
 	public void initTour() {
 		if(joueurAyantJoue == 0) {
+			joueurActuel = joueurs.get(0);
 			view.getTourDuJoueur().setText(joueurs.get(0).getPseudo());
 			view.getImgJoueur().setIcon(model.getImgJoueur(1));
 			joueurAyantJoue++;
@@ -61,6 +139,7 @@ public class JeuController {
 
 		else if(joueurAyantJoue == 1) {
 			if(compteurJoueur == 2 || compteurJoueur == 3 || compteurJoueur == 4) {
+				joueurActuel = joueurs.get(1);
 				view.getTourDuJoueur().setText(joueurs.get(1).getPseudo());
 				joueurAyantJoue ++;
 			}
@@ -71,6 +150,7 @@ public class JeuController {
 
 		else if(joueurAyantJoue == 2) {
 			if(compteurJoueur == 3 || compteurJoueur == 4) {
+				joueurActuel = joueurs.get(2);
 				view.getTourDuJoueur().setText(joueurs.get(2).getPseudo());
 				joueurAyantJoue ++;
 			}
@@ -81,6 +161,7 @@ public class JeuController {
 
 		else if(joueurAyantJoue == 3) {
 			if(compteurJoueur == 4) {
+				joueurActuel = joueurs.get(3);
 				view.getTourDuJoueur().setText(joueurs.get(3).getPseudo());
 				joueurAyantJoue = 0;
 			}
@@ -113,9 +194,18 @@ public class JeuController {
 			LettreModel lettre = new LettreModel(ChargerPartieModel.plateau[numPartie - 1].charAt(i));
 			
 			view.grille.getListe().get(i).add(lettre);
+		}
+
+	}
+	
+	public void print() {
+		for(int i = 0; i < 225; i++) {
+			System.out.print(view.grille.getListe().get(i).getVal());
 			
 		}
 	}
+	
+	
 	
 	public void fonctionsDiverses() {
 		
@@ -172,15 +262,16 @@ public class JeuController {
 
 			}
 			public void mousePressed(MouseEvent e){
+				print();
 				Random rand = new Random();
 				Joueur.getListeJoueur().get(0).printLettrePos();
 				//compteur = Joueur.getListeJoueur().get(0).getListeLettrePos().size();
 				//Model.JeuModel.setNbrDeLettreRestante(compteur);
 				//view.getLettresRestantes().setText(Integer.toString(JeuModel.getNbrDeLettreRestante()));
 				try {
-					if(JeuModel.lecture()){
+					if(model.lecture()){
 						compteur = Joueur.getListeJoueur().get(0).getListeLettrePos().size();
-						Model.JeuModel.setNbrDeLettreRestante(compteur);
+						JeuModel.setNbrDeLettreRestante(compteur);
 						view.getLettresRestantes().setText(Integer.toString(JeuModel.getNbrDeLettreRestante()));
 						//for (int i = 0; i <compteur ; i++) {
 						//element = rand.nextInt(model.getListeLettreAlp().length);
@@ -717,10 +808,6 @@ public class JeuController {
 				view.getLettreMove().setBounds((int)MouseInfo.getPointerInfo().getLocation().getX()-((width-1000)/2)-22,(int)MouseInfo.getPointerInfo().getLocation().getY()-((height-800)/2)-22,45,45);
 			}
 		});
-	}
-	
-	public void sauvegarder() {
-		
 	}
 
 	public int getCompteur(){

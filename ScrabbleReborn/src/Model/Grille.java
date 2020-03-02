@@ -14,13 +14,14 @@ import java.awt.Dimension;
 import java.awt.event.*;
 import java.util.ArrayList;
 
-public class    Grille extends JPanel {
+public class Grille extends JPanel {
     private static ArrayList<LettreModel> liste = new ArrayList<>();
     private static final int SIZE = 15;
     public Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     int width = (int) screenSize.getWidth();
     int height = (int) screenSize.getHeight();
     public static int x,y;
+    public int numPartie;
     
     public Grille() {
         //this.setLayout(null);
@@ -30,7 +31,9 @@ public class    Grille extends JPanel {
         p.setLayout(new GridLayout(SIZE, SIZE));
         p.setPreferredSize(new Dimension(700, 700)); // taille de la grille
         for (int j = 0; j < SIZE * SIZE; j++) { // permet de mettre les 100 bouttons
+
             LettreModel lettre = new LettreModel();
+            
             liste.add(lettre);
             if(j == 0 || j == 7 || j == 14 || j == 105 || j == 119 || j == 210 || j == 217 || j == 224 )
                 liste.get(j).setBackground(new Color(235,36,41));
@@ -57,6 +60,9 @@ public class    Grille extends JPanel {
 
     }
 
+    public void setNumPartie(int num) {
+    	numPartie = num;
+    }
 
     public static ArrayList<LettreModel> getListe() {
         return liste;

@@ -123,7 +123,7 @@ public class JeuModel {
 	public static void setNbrDeLettreRestante(int compteur){
 		NombreDeLettreRestante -= compteur;
 		if (NombreDeLettreRestante == 0){
-			System.out.println("LA PARTIE EST FINIS");
+			System.out.println("LA PARTIE EST FINIE");
 		}
 	}
 
@@ -151,9 +151,11 @@ public class JeuModel {
 		return null;
 	}
 
-	static public boolean lecture() throws IOException {
+	public boolean lecture() throws IOException {
 		//getMotHorizontal(169);
+		
 		System.out.println(getMotHorizontal(5));
+		
 		//getToutLesMots();
 		String lettrePose = "";
 		for (int i = 0; i < Joueur.getListeJoueur().get(0).getListeLettrePos().size(); i++) {
@@ -172,6 +174,7 @@ public class JeuModel {
 		}
 		return false;
 	}
+
 
 	 static public String getMotHorizontal(int posLettre){
 		String motAretourne = "";
