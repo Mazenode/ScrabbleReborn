@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="ScrabbleReborn:jar">
+    <output-path>$PROJECT_DIR$/classes/artifacts/ScrabbleReborn_jar</output-path>
+    <root id="archive" name="ScrabbleReborn.jar">
+      <element id="module-output" name="ScrabbleReborn" />
+    </root>
+  </artifact>
+</component>

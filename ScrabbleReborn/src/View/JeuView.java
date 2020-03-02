@@ -20,12 +20,15 @@ public class JeuView extends JFrame {
     private ImageIcon imgFondScore = new ImageIcon(this.getClass().getResource("/images/fond_score.png"));
     private ImageIcon imgFondLettresRestantes = new ImageIcon(this.getClass().getResource("/images/lettres_restantes.png"));
     private ImageIcon imgSoumettreMot = new ImageIcon(this.getClass().getResource("/images/soumettre_mot.png"));
+    private ImageIcon couronne = new ImageIcon(this.getClass().getResource("/images/couronne.png"));
     
     public Grille grille;
-    private JLabel back, sauvegarderCollisions, soumettreCollisions, titreScores, tourDe, tourDuJoueur,lettresRestantesFond, lettresRestantes, boutonSoumettreMot, imgJoueur, boutonSauvegarder;
-    private JLabel J1, J2, J3, J4, scoreJ1, scoreJ2, scoreJ3, scoreJ4;
+    private JLabel back, sauvegarderCollisions, soumettreCollisions, titreScores, tourDe, tourDuJoueur,lettresRestantesFond, boutonSoumettreMot, imgJoueur, boutonSauvegarder;
+    private JLabel J1, J2, J3, J4, scoreJ1, scoreJ2, scoreJ3, scoreJ4, gagne;
     private JPanel ongletLettresRestantes,ongletSoumettreMot, lettres,ongletTour, lettreMove;
     public LettreModel lettre1, lettre2, lettre3, lettre4, lettre5, lettre6, lettre7;
+
+    public JLabel lettresRestantes;
     
     public JeuView(){
     	this.setSize(1000, 800);
@@ -68,14 +71,20 @@ public class JeuView extends JFrame {
 		titreScores = new JLabel("Scores :");
 		titreScores.setFont(new Font("Lato", Font.BOLD, 18));
         titreScores.setForeground(Color.WHITE);
-        titreScores.setBounds(38, 22, 63, 22);
+        titreScores.setBounds(38, 22, 73, 22);
         ongletScore.add(titreScores);
 		
         
         JPanel scores = new JPanel();
-        scores.setBounds(38, 56, 206, 124);
+        scores.setBounds(48, 56, 196, 124);
         scores.setBackground(new Color(137, 80, 160));
         ongletScore.add(scores);
+        
+        gagne = new JLabel();
+        gagne.setIcon(couronne);
+        gagne.setBounds(10, 48, 40, 38);
+        ongletScore.add(gagne);
+        gagne.setVisible(false);
         
         JLabel fondScore = new JLabel("");
         fondScore.setHorizontalAlignment(SwingConstants.CENTER);
@@ -84,7 +93,7 @@ public class JeuView extends JFrame {
         ongletScore.add(fondScore);
         
         GridBagLayout gbl_scores = new GridBagLayout();
-        gbl_scores.columnWidths = new int[]{170, 14, 0};
+        gbl_scores.columnWidths = new int[]{130, 60, 0};
         gbl_scores.rowHeights = new int[]{31, 31, 31, 31, 0};
         gbl_scores.columnWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
         gbl_scores.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
@@ -182,8 +191,8 @@ public class JeuView extends JFrame {
         getContentPane().add(ongletLettresRestantes);
         ongletLettresRestantes.setLayout(new BorderLayout(0, 0));
         
-        
-        lettresRestantes = new JLabel("102");
+        // Jpanel du bag de lettre
+        lettresRestantes = new JLabel(Integer.toString(Model.JeuModel.getNbrDeLettreRestante()));
         lettresRestantes.setHorizontalAlignment(SwingConstants.CENTER);
         lettresRestantes.setFont(new Font("Lato", Font.BOLD, 70));
         lettresRestantes.setForeground(Color.WHITE);
@@ -260,31 +269,31 @@ public class JeuView extends JFrame {
         getContentPane().add(lettres);
         lettres.setLayout(new GridLayout(1, 0, 0, 0));
         
-        lettre1 = new LettreModel('a');
+        lettre1 = new LettreModel('d');
         lettre1.setOpaque(false);
         lettre1.setContentAreaFilled(false);
         lettre1.setBorder(null);
-        lettre2 = new LettreModel('b');
+        lettre2 = new LettreModel('e');
         lettre2.setOpaque(false);
         lettre2.setContentAreaFilled(false);
         lettre2.setBorder(null);
-        lettre3 = new LettreModel('c');
+        lettre3 = new LettreModel('u');
         lettre3.setOpaque(false);
         lettre3.setContentAreaFilled(false);
         lettre3.setBorder(null);
-        lettre4 = new LettreModel('d');
+        lettre4 = new LettreModel('x');
         lettre4.setOpaque(false);
         lettre4.setContentAreaFilled(false);
         lettre4.setBorder(null);
-        lettre5 = new LettreModel('e');
+        lettre5 = new LettreModel('s');
         lettre5.setOpaque(false);
         lettre5.setContentAreaFilled(false);
         lettre5.setBorder(null);
-        lettre6 = new LettreModel('f');
+        lettre6 = new LettreModel('n');
         lettre6.setOpaque(false);
         lettre6.setContentAreaFilled(false);
         lettre6.setBorder(null);
-        lettre7 = new LettreModel('g');
+        lettre7 = new LettreModel('n');
         lettre7.setOpaque(false);
         lettre7.setContentAreaFilled(false);
         lettre7.setBorder(null);
@@ -295,7 +304,6 @@ public class JeuView extends JFrame {
         lettres.add(lettre5);
         lettres.add(lettre6);
         lettres.add(lettre7);
-        
         grille.revalidate();
     }
     
@@ -322,7 +330,9 @@ public class JeuView extends JFrame {
     public JPanel getLettreMove() {
     	return lettreMove;
     }
-    
+
+    public JLabel getLettresRestantes(){return  lettresRestantes;}
+
     public JLabel getCollisions(int i) {
     	if(i == 1) {
     		return sauvegarderCollisions;
@@ -367,5 +377,21 @@ public class JeuView extends JFrame {
     			return scoreJ4;
     	}
     	return null;
+    }
+
+    public JLabel getTourDuJoueur(){
+        return tourDuJoueur;
+    }
+
+    public JLabel getImgJoueur(){
+        return imgJoueur;
+    }
+
+    public JeuView getThis(){
+        return this;
+    }
+    
+    public JLabel getVictoire() {
+    	return gagne;
     }
 }

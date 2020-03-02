@@ -65,12 +65,6 @@ public class CreerPartieView extends JFrame{
 		boutonCreerJoueur.setBounds(413, 423, 382, 87);
 		getContentPane().add(boutonCreerJoueur);
 		
-		JCheckBox tourChrono = new JCheckBox("  Jouer avec des tours chronometres");
-		tourChrono.setFont(new Font("Lato", Font.BOLD, 14));
-		tourChrono.setBounds(465, 531, 251, 15);
-		tourChrono.setBackground(new Color(251, 211, 9));
-		getContentPane().add(tourChrono);
-		
 		boutonLancerLaPartie = new JLabel();
 		boutonLancerLaPartie.setIcon(imgLancerPartie);
 		boutonLancerLaPartie.setBounds(413, 586, 382, 87);

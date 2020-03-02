@@ -6,15 +6,13 @@ import javax.swing.SwingConstants;
 
 public class LettreModel extends JButton {
 	private static final long serialVersionUID = 1L;
-	private ImageIcon image;
-	public boolean isSet;
+	public ImageIcon image;
+	public int posLettre = 300;
 	public char val;
-	private int scoreLettre;
 	
 	public LettreModel() {
 		this.setVisible(true);
 		this.val = '#';
-		this.scoreLettre = getScoreLettre(this.val);
 		this.setHorizontalAlignment(SwingConstants.CENTER);
 	}
 
@@ -22,7 +20,6 @@ public class LettreModel extends JButton {
 		if(val != '#') {
 			this.setVisible(true);
 			this.val = val;
-			this.scoreLettre = getScoreLettre(val);
 			this.image = new ImageIcon(this.getClass().getResource("/images/"+val+".png"));
 			this.setIcon(image);
 			this.setHorizontalAlignment(SwingConstants.CENTER);
@@ -31,21 +28,21 @@ public class LettreModel extends JButton {
 			this.setVisible(false);
 		}
 	}
+
 	
 	public ImageIcon getImage(){
 		return image;
 	}
-	
-	public boolean getIsSet(){
-		return isSet;
-	}
 
+	public int getPosLettre(){
+		return posLettre;
+	}
 	
 	public char getVal(){
 		return val;
 	}
-	
-	public int getScoreLettre(char i) {
+
+	public static int getScoreLettre(char i) {
         switch(i) {
             case 'a':
                 return 1;
