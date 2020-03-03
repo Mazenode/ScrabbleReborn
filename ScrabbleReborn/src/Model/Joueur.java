@@ -66,6 +66,7 @@ public class Joueur {
 		for(int l : listeLettrePos) {
 			bonusMul *= Grille.getMultiMot(l);
 		}
+
 		return bonusMul;
 	}
 
@@ -74,21 +75,28 @@ public class Joueur {
 		totalScore += getScoreMotAvecLettre(s.get(0));
 		totalScore *= getMotMultiBonus(s.get(0));
 
+
+
 		s.remove(s.get(0));
 
 		for(String st : s) {
 			for(int i = 0; i < st.length(); i++) totalScore += LettreModel.getScoreLettre(st.charAt(i));
 		}
+
 		score += totalScore;
+
 	}
 
 
 	private int getScoreMotAvecLettre(String st) {
 		String s = st;
+
 		int LetterScore = 0;
+
 		for(int l : listeLettrePos) {
 			LetterScore += LettreModel.getScoreLettre(Grille.getListe().get(l).getVal()) * Grille.getMultiLettre(l);
 		}
+
 		return  LetterScore;
 	}
 

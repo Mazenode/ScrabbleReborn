@@ -123,67 +123,84 @@ public class JeuController {
 	}
 
 	public static void setVariable(int nombreLignes, String data) throws IOException {
-	    Path path = Paths.get("src/parties.txt");
+	    Path path = Paths.get("parties.txt");
 	    List<String> lines = Files.readAllLines(path, StandardCharsets.UTF_8);
 	    lines.set(nombreLignes - 1, data);
 	    Files.write(path, lines, StandardCharsets.UTF_8);
 	}
 
 	public void initTour() {
-		
+
 		if(!model.victoire) {
 			if(joueurAyantJoue == 0) {
 				view.getScores(0).setText(Integer.toString(joueurs.get(0).getScore()));
-                numTour+=1;
-                joueurActuel = joueurs.get(0);
-                view.getTourDuJoueur().setText(joueurs.get(0).getPseudo());
-                view.getImgJoueur().setIcon(model.getImgJoueur(1));
-                view.getScores(0).revalidate();
-                joueurAyantJoue++;
-            }
+				numTour+=1;
+				joueurActuel = joueurs.get(0);
+				view.getTourDuJoueur().setText(joueurs.get(0).getPseudo());
+				view.getImgJoueur().setIcon(model.getImgJoueur(1));
+				view.getScores(0).revalidate();
+				joueurAyantJoue++;
+			}
 
-            else if(joueurAyantJoue == 1) {
-                if(compteurJoueur == 2) {
+			else if(joueurAyantJoue == 1) {
+				if(compteurJoueur == 2) {
 					view.getScores(1).setText(Integer.toString(joueurs.get(1).getScore()));
-                    joueurActuel = joueurs.get(1);
-                    view.getTourDuJoueur().setText(joueurs.get(1).getPseudo());
-                    joueurAyantJoue = 0;
-                }
-                else if(compteurJoueur == 3 || compteurJoueur == 4) {
+					joueurActuel = joueurs.get(1);
+					view.getTourDuJoueur().setText(joueurs.get(1).getPseudo());
+					joueurAyantJoue = 0;
+				}
+				else if(compteurJoueur == 3 || compteurJoueur == 4) {
 					view.getScores(1).setText(Integer.toString(joueurs.get(1).getScore()));
-                    joueurActuel = joueurs.get(1);
-                    view.getTourDuJoueur().setText(joueurs.get(1).getPseudo());
-                    joueurAyantJoue ++;
-                }
+					joueurActuel = joueurs.get(1);
+					view.getTourDuJoueur().setText(joueurs.get(1).getPseudo());
+					joueurAyantJoue ++;
+				}
 				view.getScores(1).revalidate();
-            }
+			}
 
-            else if(joueurAyantJoue == 2) {
-                if(compteurJoueur == 3) {
+			else if(joueurAyantJoue == 2) {
+				if(compteurJoueur == 3) {
 					view.getScores(2).setText(Integer.toString(joueurs.get(2).getScore()));
-                    joueurActuel = joueurs.get(2);
-                    view.getTourDuJoueur().setText(joueurs.get(2).getPseudo());
-                    joueurAyantJoue= 0;
-                }
-                else if(compteurJoueur == 4) {
+					joueurActuel = joueurs.get(2);
+					view.getTourDuJoueur().setText(joueurs.get(2).getPseudo());
+					joueurAyantJoue= 0;
+				}
+				else if(compteurJoueur == 4) {
 					view.getScores(2).setText(Integer.toString(joueurs.get(2).getScore()));
-                    joueurActuel = joueurs.get(2);
-                    view.getTourDuJoueur().setText(joueurs.get(2).getPseudo());
-                    joueurAyantJoue ++;
-                }
+					joueurActuel = joueurs.get(2);
+					view.getTourDuJoueur().setText(joueurs.get(2).getPseudo());
+					joueurAyantJoue ++;
+				}
 				view.getScores(2).revalidate();
-            }
+			}
 
-            else if(joueurAyantJoue == 3) {
-                if(compteurJoueur == 4) {
+			else if(joueurAyantJoue == 3) {
+				if(compteurJoueur == 4) {
 					view.getScores(3).setText(Integer.toString(joueurs.get(3).getScore()));
-                    joueurActuel = joueurs.get(3);
-                    view.getTourDuJoueur().setText(joueurs.get(3).getPseudo());
-                    joueurAyantJoue = 0;
-                }
+					joueurActuel = joueurs.get(3);
+					view.getTourDuJoueur().setText(joueurs.get(3).getPseudo());
+					joueurAyantJoue = 0;
+				}
 				view.getScores(3).revalidate();
-            }
+			}
 
+			view.getScores(0).setText(Integer.toString(joueurs.get(0).getScore()));
+			view.getScores(0).revalidate();
+			view.getScores(1).setText(Integer.toString(joueurs.get(1).getScore()));
+			view.getScores(1).revalidate();
+			if(compteurJoueur >= 2) {
+				view.getScores(1).setText(Integer.toString(joueurs.get(1).getScore()));
+				view.getScores(1).revalidate();
+				if(compteurJoueur >= 3) {
+					view.getScores(2).setText(Integer.toString(joueurs.get(2).getScore()));
+					view.getScores(2).revalidate();
+					if(compteurJoueur >= 4) {
+						view.getScores(3).setText(Integer.toString(joueurs.get(3).getScore()));
+						view.getScores(3).revalidate();
+
+					}
+				}
+			}
 			changerChevalet(view.lettre1, 0);
 			changerChevalet(view.lettre2, 1);
 			changerChevalet(view.lettre3, 2);
@@ -333,7 +350,7 @@ public class JeuController {
 			}
 			public void mousePressed(MouseEvent e){
 				try {
-					if(model.lecture(view, joueurActuel,joueurs)){
+					if(model.lecture(view, joueurActuel)){
 						compteur = joueurActuel.getListeLettrePos().size();
 						Model.JeuModel.setNbrDeLettreRestante(compteur);
 						view.getLettresRestantes().setText(Integer.toString(JeuModel.getNbrDeLettreRestante()));

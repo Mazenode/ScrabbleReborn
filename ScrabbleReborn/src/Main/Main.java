@@ -24,7 +24,16 @@ public class Main {
 		MenuModel model = new MenuModel();
 		
 		MenuController controller = new MenuController(view, model);
-
+		
+		/*
+		JeuView jeuView = new JeuView();
+		JeuModel jeuModel = new JeuModel();
+		JeuController jeuController = new JeuController(jeuView, jeuModel,2);*/
+		
+		
+		/*ChargerPartieView view = new ChargerPartieView();
+		ChargerPartieModel model = new ChargerPartieModel();
+		ChargerPartieController controller = new ChargerPartieController(view, model);*/
 	}
 	
 }

@@ -158,7 +158,7 @@ public class JeuModel {
 		return null;
 	}
 
-	public boolean lecture(JeuView view, Joueur joueur, ArrayList<Joueur> joueurs) throws IOException {
+	public boolean lecture(JeuView view, Joueur joueur) throws IOException {
 		joueurActuel = joueur;
 		getToutLesMots(view);
 		//int i = 0;
@@ -173,7 +173,8 @@ public class JeuModel {
 					return false;
 				}
 				if (getToutLesMots(view).get(i).toUpperCase().equals(line)) {
-					joueurs.get(i).retrieveScoreActivePlayer(getToutLesMots(view));
+
+					joueur.retrieveScoreActivePlayer(getToutLesMots(view));
 					break;
 				}
 				line = buffer.readLine();
@@ -182,7 +183,6 @@ public class JeuModel {
 				return false;
 			}
 			if (i == getToutLesMots(view).size() - 1){
-
 				return true;
 			}
 		}

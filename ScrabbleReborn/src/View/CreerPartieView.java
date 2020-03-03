@@ -64,7 +64,7 @@ public class CreerPartieView extends JFrame{
 		boutonCreerJoueur.setIcon(imgBoutonCreerJoueur);
 		boutonCreerJoueur.setBounds(413, 423, 382, 87);
 		getContentPane().add(boutonCreerJoueur);
-		
+
 		boutonLancerLaPartie = new JLabel();
 		boutonLancerLaPartie.setIcon(imgLancerPartie);
 		boutonLancerLaPartie.setBounds(413, 586, 382, 87);
