@@ -27,6 +27,8 @@ Voici la fenêtre du Jeu
 
 ![ScrabbleJeu](https://user-images.githubusercontent.com/36196503/79072007-fe583900-7cde-11ea-9aad-67d0678a4ea6.PNG)
 
+## Sources
+Toutes les émoticones ont été faites par la streameuse 39daph (https://www.twitch.tv/39daph)
 
 ## Fabriqué avec
 
