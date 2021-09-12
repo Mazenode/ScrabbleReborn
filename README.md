@@ -46,4 +46,4 @@ Version Final ``1.0``
 
 * **Mathieu LÊ-HOANG** _alias_ [@MaxiMat91](https://github.com/MaxiMat91)
 * **Quentin CHAIGNAUD** _alias_ [@Mazenode](https://github.com/Mazenode)
-* **Mathieu AUBRY** _alias_ [@Rysekk](https://github.com/rezatera854)
+* **Mathieu AUBRY** _alias_ [@Rysekk](https://github.com/Rysekk)
